@@ -4,7 +4,7 @@ layout: default
 
 Text can be **bold**, _italic_, ~~strikethrough~~ or `keyword`.
 
-[Link to another page](another-page).
+[Link to another page](/post/2015-04-14-unix-linux-note).
 
 There should be whitespace between paragraphs.
 
