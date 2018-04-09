@@ -1,4 +1,4 @@
 #DuHuazhen Blog
 
-###[View Live Hux Blog &rarr;](https://duhuazhen.github.io)
+###[View Live DuHuazhen Blog &rarr;](https://duhuazhen.github.io)
 
