@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Hello 2018"
+title:      "深度学习资料整理"
 subtitle:   " \"Hello World, Hello Blog\""
 date:       2018-01-29 12:00:00
 author:     "DuHuazhen"
