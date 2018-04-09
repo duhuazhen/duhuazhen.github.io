@@ -6,7 +6,7 @@ author:     "DuHuazhen"
 header-img: "img/post-bg-alibaba.jpg"
 catalog: true
 tags:
-    - 深度学习
+    - 生活
 ---
 
 ## 深度学习资料整理
