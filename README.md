@@ -7,11 +7,8 @@
 
 ### 方法一  
  
-
-在文章中添加如下代码  
-
-然后到Latex在线编辑网站  
-http://www.codecogs.com/latex/eqneditor.php  编写就OK了 
+到Latex在线编辑网站  
+http://www.codecogs.com/latex/eqneditor.php  编写 
 
 <img src="http://latex.codecogs.com/gif.latex?x_{a}^{b}=\sqrt{x}&plus;_{a}^{b}\textrm{c}" title="x_{a}^{b}=\sqrt{x}+_{a}^{b}\textrm{c}" />
 
