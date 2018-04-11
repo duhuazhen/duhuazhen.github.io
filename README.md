@@ -6,12 +6,7 @@
 
 ## 公式的编写     
 ### 方法一  
-# 一级标题  
-## 二级标题  
-### 三级标题  
-#### 四级标题  
-##### 五级标题  
-###### 六级标题 
+ 
 
 在文章中添加如下代码  
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">  
