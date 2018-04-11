@@ -1,10 +1,10 @@
 # DuHuazhen Blog
 
-###[View Live DuHuazhen Blog &rarr;](https://duhuazhen.github.io)  
+ ###[View Live DuHuazhen Blog &rarr;](https://duhuazhen.github.io)  <br>
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">  <br>
- 
-## 公式的编写     
+
+## 公式的编写      
+
 ### 方法一  
  
 
@@ -16,9 +16,3 @@ http://www.codecogs.com/latex/eqneditor.php  编写就OK了
 
 <img src="http://latex.codecogs.com/gif.latex?x_{a}^{b}=\sqrt{x}&plus;_{a}^{b}\textrm{c}" title="x_{a}^{b}=\sqrt{x}+_{a}^{b}\textrm{c}" />
 
-# 一级标题  
-## 二级标题  
-### 三级标题  
-#### 四级标题  
-##### 五级标题  
-###### 六级标题 
