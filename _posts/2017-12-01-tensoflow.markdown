@@ -10,6 +10,7 @@ tags:
 ---
 
 # TensorFlow学习资源汇总
+
 ##  一 、TensorFlow教程资源
 
 1)适合初学者的TensorFlow教程和代码示例：  
@@ -46,7 +47,7 @@ https://github.com/terryum/TensorFlow_Exercises
 
 接下来，再给大家推荐一些TensorFlow不错的视频教程：
 
-## **▌****二、TensorFlow视频资源**
+## ******二、TensorFlow视频资源**
 
 1)TF Girls 修炼指南：
 
@@ -94,7 +95,7 @@ https://developers.google.cn/machine-learning/crash-course/
 
 好了，通过上边的资源文档和视频教程详细大家对TensorFlow已经有了扎实的基础，接下来是不是应该做一些逼格比较高的实战项目提升一下自己呢？所以接下来为大家推荐一些项目实战资源。
 
-## **▌****三、TensorFlow项目资源**
+## ******三、TensorFlow项目资源**
 
 1)一个实现实现Alex Graves论文的随机手写生成的案例：
 
