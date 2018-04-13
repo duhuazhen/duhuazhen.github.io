@@ -14,7 +14,7 @@ tags:
 
 1)适合初学者的TensorFlow教程和代码示例：  
 
-https://github.com/aymericdamien/TensorFlow-Examples
+(https://github.com/aymericdamien/TensorFlow-Examples)
 
 该教程不光提供了一些经典的数据集，更是从实现最简单的“Hello World”开始，到机器学习的经典算法，再到神经网络的常用模型，一步步带你从入门到精通，是初学者学习TensorFlow的最佳教程。
 
