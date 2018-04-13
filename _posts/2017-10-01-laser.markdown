@@ -15,10 +15,10 @@ tags:
 ##### 激光类型
 ![image.png](https://upload-images.jianshu.io/upload_images/11573595-bcca766e8a511cbc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
 
-北洋Hokuyo：[http://www.ukelai.com/beiyang/](http://www.ukelai.com/beiyang/)
-![Hokuyo.png](https://upload-images.jianshu.io/upload_images/11573595-095322f09e3f9bb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-西克 Sick： [http://www.ukelai.com/xike/](http://www.ukelai.com/xike/)
-![Sick.png](https://upload-images.jianshu.io/upload_images/11573595-6b6726804b75813f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+北洋Hokuyo：[http://www.ukelai.com/beiyang/](http://www.ukelai.com/beiyang/)  
+![Hokuyo.png](https://upload-images.jianshu.io/upload_images/11573595-095322f09e3f9bb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
+西克 Sick： [http://www.ukelai.com/xike/](http://www.ukelai.com/xike/)  
+![Sick.png](https://upload-images.jianshu.io/upload_images/11573595-6b6726804b75813f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
 
 [https://www.sick.com/cn/zh/detection-and-ranging-solutions/2d-lidar-/c/g91900](https://www.sick.com/cn/zh/detection-and-ranging-solutions/2d-lidar-/c/g91900)
         激光扫出的典型的人腿形状如图1所示，可以看到人腿呈现出了典型的圆弧形，我们可以利用人腿圆弧形特征来找到相应的人腿特征。主要是通过聚类的方法以及利用人腿的圆弧形特征来找到人腿，在没有干扰的情况下可以较准确的识别出人腿，并且可以找到人腿中心坐标。利用人腿的中心坐标我们可以算出人腿中心与激光的距离和角度，也就可以算出人腿中心与小车的距离和角度。有了距离和角度，利用了的pid来控制小车的运动。
