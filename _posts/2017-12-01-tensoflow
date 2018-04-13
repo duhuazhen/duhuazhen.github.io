@@ -1,3 +1,14 @@
+---
+layout:     post
+title:      " tensorflow资料整理 "
+date:       2017-01-30 12:00:00
+author:     "DuHuazhen"
+header-img: "img/home-bg-geek.jpg"
+catalog: true
+tags:
+    - 深度学习
+---
+
 # TensorFlow学习资源汇总
 ##  一 、TensorFlow教程资源
 
@@ -95,7 +106,7 @@ https://github.com/zsdonghao/text-to-image
 
 如下图所示，该项目是基于TensorFlow的DCGAN模型，教大家一步步从对抗生成文本到图像合成。
 
-![史上最全TensorFlow学习资源汇总](http://upload-images.jianshu.io/upload_images/11573595-d38d1a14c5765f4d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![1](http://upload-images.jianshu.io/upload_images/11573595-d38d1a14c5765f4d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 3)基于注意力的图像字幕生成器：
 
@@ -109,7 +120,7 @@ https://github.com/pavelgonchar/colornet
 
 一个非常有趣且应用场景非常广的一个项目，使用神经网络着色灰度图像。
 
-![史上最全TensorFlow学习资源汇总](http://upload-images.jianshu.io/upload_images/11573595-04e3dc2ea7e9f754?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![2](http://upload-images.jianshu.io/upload_images/11573595-04e3dc2ea7e9f754?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 5)基于Facebook中FastText的简单嵌入式文本分类器：
 
