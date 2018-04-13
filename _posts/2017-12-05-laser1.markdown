@@ -1,0 +1,279 @@
+# 基于激光雷达的人体跟踪(2)
+#### 3.1 人体腿部检测算法
+
+这里使用北洋公司生产的二维激光雷达HOKUYO UＲG-04LX-UG01。它的测量范围是 5\. 6 m，角度范围是 240° (角度分辨率为0.36°)。本文使用 180° /0.36°的扫描模式，单次扫描可获得 500 个测量数据，扫描时间为 100 ms。激光雷达水平安装在距离地面 0.3 m 高机器人位置处。
+      本文通过检测人腿来检测人体，首先将运动区域中的激光数据点进行分段，若连续两个点之间的距离小于某一个阈值(实验中设为8cm)，则他们属于同一段，通过激光扫描出来的人腿形状为类圆弧形，大多数情况下激光能够扫描到的图像如图2所示，图2左边表示激光在人的后面能够扫描到人的两条腿，右边表示激光在人的侧面时只能扫到一条腿。如图3所示，由于人腿的特殊性，激光扫描出来的人腿形状有一些几何学上的特征，通过提取人腿形状的一些有效的特征来识别人腿。文[1]使用了AdaBoost方法来训练腿部数据特征，AdaBoost通过训练正样本(腿部的特征数据)和负样本(非腿部的特征数据)能够找到最优的特征，但是AdaBoost分类器只能将正样本和负样本用直线分开，所以很难用更加细致的边界曲线来区别正样本和负样本。而SVM就能用更加复杂的边界曲线来更好地区分正样本和负样本。这里给出支持向量机讲的比较好的几个博客，也可参考西瓜书<<机器学习>>  
+[https://www.cnblogs.com/steven-yang/p/5658362.html](https://www.cnblogs.com/steven-yang/p/5658362.html)  
+[https://blog.csdn.net/zx10212029/article/details/50198547](https://blog.csdn.net/zx10212029/article/details/50198547)  
+[https://blog.csdn.net/xmdxcsj/article/details/51511346](https://blog.csdn.net/xmdxcsj/article/details/51511346)  
+      由于人穿裤子时，裤子表面会随时变化，所以激光扫描检测到的人体腿部的形状也不能被简单地描述，为了分析人体腿部聚类数据的特征，需要使用大量的训练数据。我们采集了五个人的数据，每个人都穿普通的非宽松的裤子，每个人都在距离激光1-5m的距离随意走动，激光放在距离地面30cm高的位置上。首先在干扰物较少的环境中采集人体腿部数据，其次在普通办公室环境下采集非腿部数据，一共采集到2215组聚类数据，其中包括腿部数据和一些室内环境中的非腿部数据，使用SVM来训练这些数据。
+
+```cpp
+#include "laser.h"
+#include "ml.h"
+QFile laser1File("laser1.txt");
+QFile laser2File("laser2.txt");
+bool laser1TxtRemoveFlag=true;
+bool laser2TxtRemoveFlag=true;
+double angle_laser;
+double distance_car_laser;
+struct coor{
+
+    double x;
+    double y;
+    int cluster;
+};
+
+struct curve{
+
+    double L;
+    double D;
+};
+
+struct ceter{
+
+    double x;
+    double y;
+};
+// initial position
+ //std_msgs::Int16 V_L;
+// std_msgs::Int16 V_R;
+
+
+//编码器的值
+double right_enc=0;
+double left_enc=0;
+double right_enc_old=0;
+double left_enc_old=0;
+double dtcout = 0;
+
+void LaserCallback (const sensor_msgs::LaserScan::ConstPtr& msg){
+
+    // To get header data from sensor msg
+//    SensorMsg = *msg;
+
+    double px, py, pr, pt,dx,dy,R;
+    std::vector < double >  laser_x;
+    std::vector < double >  laser_y;
+    std::vector < double >  laser_r;
+    std::vector < double >  laser_t;
+    std::vector<coor>  C;
+    std::vector<ceter>  Ceter;
+    ceter temp1;
+    coor temp;
+    for( unsigned i = 0; i < msg->ranges.size(); i++ ){
+      pr = msg->ranges[ i ];
+      pt = msg->angle_min + ( i * msg->angle_increment);
+      laser_r.push_back( pr );
+      laser_t.push_back( pt*180/3.14 );
+    }
+
+    for( unsigned i = 0; i < msg->ranges.size(); i++ ){
+      pr = laser_r[ i ] * cos( laser_t[ i ]*3.14/180 );
+      pt = laser_r[ i ] * sin( laser_t[ i ]*3.14/180 );
+      //激光数据中有很多无效数据，为无限大(inf)或者非数字(nan)的值，通过isnormal()函数来排除这些数据，
+     //参考：http://blog.csdn.net/wokaowokaowokao12345/article/details/72846436
+      if(isnormal(pr)&&isnormal(pt))
+      {
+        laser_x.push_back( pr );
+        laser_y.push_back( pt );
+      }
+    }
+    //计算有效数据的个数
+    int laser_size=laser_x.size();
+    //类别至少为１
+     int sort=1;
+     int sort_max=1;
+    temp.x=laser_x[ 0 ];
+    temp.y=laser_y[ 0 ];
+    temp.cluster=sort;
+    C.push_back(temp);
+    //按类别把数据分类，两点之间距离小于0.5米就归为一类,然后不归为一类的就再加上一类
+    for( unsigned i = 0; i <laser_size; i++ ){
+
+             unsigned ii=i,jj=i+1;
+             dx=laser_x[jj]-laser_x[ii];
+             dy=laser_y[jj]-laser_y[ii];
+             R=sqrt(dx*dx+dy*dy);
+             if(R<0.5)
+             {
+                 temp.x=laser_x[jj];
+                 temp.y=laser_y[jj];
+                 temp.cluster=sort;
+                 C.push_back(temp);
+             }
+             else
+             {
+                 temp.x=laser_x[jj];
+                 temp.y=laser_y[jj];
+                 temp.cluster=sort+1;
+                 sort=sort+1;
+                 sort_max=sort;
+                 C.push_back(temp);
+             }
+
+       }
+
+    double Lk,Dk,dx1,dy1,dx2,dy2,dx3,dy3,dx4,dy4,dx_begin,dy_begin,dx_end,dy_end,curve;
+    vector<coor>::iterator it1;
+
+    for(int category=1;category<=sort_max;category++){
+        bool test1=true;
+        bool test2=true;
+         bool test3=true;
+        Lk=0;
+        //for(it1 = C.begin();it1 != C.end();it1++)
+         for(it1 = C.begin();it1 != C.end();it1++)
+         {
+
+            //if((*it1).cluster==category&&((abs((*it1).x-Xc))<=0.3)&&((abs((*it1).y-Yc))<=0.3))
+            if((*it1).cluster==category)
+            {
+                //找到一类的起始点
+                if(test1)
+                 {
+                  dx_begin=(*it1).x;
+                  dy_begin=(*it1).y;
+                  test1=false;
+                }
+               //找到一类的起始点，但是这里dx1,dy1只用一次，不能每次都用，
+                //否则不能实现依次两个数据减的效果，后面再给dx1=dx2,dy1=dy2。
+                if(test3)
+                 {
+                  dx1=(*it1).x;
+                  dy1=(*it1).y;
+                  test3=false;
+                }
+                  dx2=(*it1).x;
+                  dy2=(*it1).y;
+                  dx3=dx2-dx1;
+                  dy3=dy2-dy1;
+                  //计算每一类从头到尾连起来的长度
+                  Lk=Lk+sqrt(dx3*dx3+dy3*dy3);
+
+                  vector<coor>::iterator it3;
+                  for(it3=C.end();it3 != C.begin();it3--)
+                  {
+                     if((*it3).cluster==category)
+                     {
+                         if(test2)
+                         {
+                           dx_end=(*it3).x;
+                           dy_end=(*it3).y;
+                           test2=false;
+                         }
+                     }
+
+                  }
+                  dx4=dx_end-dx_begin;
+                  dy4=dy_end-dy_begin;
+                  //计算每一类第一个与最后一个的距离
+                  Dk=sqrt(dx4*dx4+dy4*dy4);
+                  dx1=dx2;
+                  dy1=dy2;
+
+            }
+            int cc =1;
+            cc=2;
+
+        }
+    //计算两者的比例
+         curve=Lk/Dk;
+         
+    //　加上一些限定条件来找到腿部数据，也可以加上一些距离信息，这里还没有加.
+         CvSVM *SVM;
+         SVM->load("/home/cyy/ros_car/carcontrol/SVM_DATA.xml");
+         float a[] = { Lk, curve};
+         CvMat sampleMat;
+         cvInitMatHeader(&sampleMat, 1, 2, CV_32FC1, a);
+         cvmSet(&sampleMat, 0, 0, Lk);                                        // Set M(i,j)
+         cvmSet(&sampleMat, 0, 1,curve);                                        // Set M(i,j)
+         float response = SVM->predict(&sampleMat);
+         if(response==1)
+         {
+
+             if (laser1TxtRemoveFlag)
+              {
+                     QFile::remove("./laser1.txt");
+                     laser1TxtRemoveFlag = false;
+              }
+             laser1File.open(QIODevice::WriteOnly | QIODevice::Append);
+             QTextStream writetxt123(&laser1File);
+             writetxt123 << QString::number(Lk) + "  " + QString::number(Dk) + "  " + QString::number(curve) + "  " + QString::number(0) + "  " << '\n';
+             laser1File.close();
+             double test_curve=curve;
+             for(it1=C.begin();it1 != C.end();it1++)
+             {
+                if((*it1).cluster==category&&((*it1).x<1.1)&&(abs((*it1).y)<0.5))
+                {
+
+                    temp1.x=(*it1).x;
+                    temp1.y=(*it1).y;
+                    Ceter.push_back(temp1);
+
+
+                }
+
+              }
+
+         }
+         else
+         {
+             if (laser1TxtRemoveFlag)
+              {
+                     QFile::remove("./laser1.txt");
+                     laser1TxtRemoveFlag = false;
+              }
+             laser1File.open(QIODevice::WriteOnly | QIODevice::Append);
+             QTextStream writetxt123(&laser1File);
+             writetxt123 << QString::number(Lk) + "  " + QString::number(Dk) + "  " + QString::number(curve) + "  " + QString::number(0) + "  "<< '\n';
+             laser1File.close();
+
+
+         }
+
+     }
+    double Xc,Yc,Xc_1,Yc_1;
+   vector<ceter>::iterator it2;
+    for(it2=Ceter.begin();it2!= Ceter.end();it2++)
+    {
+
+        Xc_1=(*it2).x+Xc_1;
+        Yc_1=(*it2).y+Yc_1;
+
+    }
+    Xc=Xc_1/Ceter.size();
+    Yc=Yc_1/Ceter.size();
+    distance_car_laser=sqrt(Xc*Xc+Yc*Yc);
+    angle_laser=atan(Yc/Xc);
+    double test_Yc=Yc;
+    if (laser2TxtRemoveFlag)
+     {
+            QFile::remove("./laser2.txt");
+            laser2TxtRemoveFlag = false;
+     }
+    laser2File.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream writetxt123(&laser2File);
+    writetxt123 << QString::number(distance_car_laser) + "  " + QString::number(angle_laser) + "  " << '\n';
+    laser2File.close();
+
+}
+laser::laser()
+{
+
+}
+
+void laser::run()
+{
+    while (true)	//收到Ctrl+C 后停止
+    {
+      ros::NodeHandle nh;
+     // ros::Rate loop_rate(125);  //发送速率为20hz
+
+      ros::Subscriber node_sub = nh.subscribe("/scan", 2, LaserCallback);
+     ros::spin();
+     // loop_rate.sleep();	//按照20hz的频率挂起
+    }
+}
+```
+
