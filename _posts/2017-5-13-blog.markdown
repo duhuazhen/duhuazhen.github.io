@@ -5,8 +5,7 @@ date:       2017-5-13
 author:     "Duhuazhen"
 header-img: "img/post-bg-2015.jpg"
 tags:
-    - 人体跟踪
-    - 深度学习
+    - 基础
 ---
 
 #### 主要个人技术博客的选择
