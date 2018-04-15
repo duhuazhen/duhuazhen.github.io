@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "基于激光雷达的人体跟踪(1)"
+title:      "基于激光雷达的人体跟踪(2)"
 subtitle:   "svm应用于人体腿部检测。"
 date:       2017-12-13
 author:     "Duhuazhen"
