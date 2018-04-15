@@ -9,7 +9,7 @@ tags:
 ---
 
 #### 主要个人技术博客的选择
-https://blog.csdn.net/grape875499765/article/details/79017906
+[https://blog.csdn.net/grape875499765/article/details/79017906](https://blog.csdn.net/grape875499765/article/details/79017906)
 #### 支持markdown的博客平台
 
 参考大家在知乎中的回答：[https://www.zhihu.com/question/21172379](https://www.zhihu.com/question/21172379)
@@ -33,7 +33,7 @@ CSDN除了博客外还有很多其他资源，比如源代码下载、课程学�
 博客定制性差，基本只能调整下模块位置，换个固定的显示模板，最多加个友情链接；
 
 
-####博客园
+#### 博客园
 ##### 优点 
 博客写完发表即可，不需要做额外的事情，还有要提的是支持数学公式和流程图编写；
 ##### 缺点
