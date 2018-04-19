@@ -7,7 +7,7 @@ author:     "DuHuazhen"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
-    - 基础
+    - 机器学习
 ---
 
 <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -42,7 +42,7 @@ k均值算法是最受欢迎也被广泛使用的算法，这个算法能够将�
 
 K（聚类数目）
 
-训练集 ${x^{(1)}},{x^{(2)}},...,{x^{(m)}}$
+训练集${x^{(1)}},{x^{(2)}},...,{x^{(m)}}$$
 
 [图片上传失败...(image-d6fc8f-1524146033784)] 
 
