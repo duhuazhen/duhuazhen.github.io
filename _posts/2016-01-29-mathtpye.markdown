@@ -8,15 +8,22 @@ catalog: true
 tags:
     - 基础
 ---
+## 方法二 使用codecogs在线编辑网站
+使用在线编辑网站[http://www.codecogs.com/latex/eqneditor.php](http://www.codecogs.com/latex/eqneditor.php)
 
+<img src="http://latex.codecogs.com/gif.latex?a^{x}&plus;\frac{c}{d}=\frac{e}{f}" title="a^{x}+\frac{c}{d}=\frac{e}{f}" />
 
-
-## 方法
+## 方法二 使用MathJax引擎
 
 <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-
+在markdown文件中插入以下代码：
+ ``` 
+<script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+ ``` 
+ 
 formula1:
 $$n = x$$
 
