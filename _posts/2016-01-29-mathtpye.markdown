@@ -28,12 +28,13 @@ formula1:
  ``` 
 $$n = x$$  
  ``` 
- $$n = x$$
+ $$n = x$$  
 formula2:   
 ``` 
 $$n \neq x$$
 ``` 
 $$n = x$$  
+
 formula3:  
  ``` 
  \(m = y\) 
