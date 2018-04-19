@@ -8,7 +8,7 @@ catalog: true
 tags:
     - 基础
 ---
-## 方法二 使用codecogs在线编辑网站
+## 方法一 使用codecogs在线编辑网站
 使用在线编辑网站[http://www.codecogs.com/latex/eqneditor.php](http://www.codecogs.com/latex/eqneditor.php)
 
 <img src="http://latex.codecogs.com/gif.latex?a^{x}&plus;\frac{c}{d}=\frac{e}{f}" title="a^{x}+\frac{c}{d}=\frac{e}{f}" />
@@ -24,17 +24,22 @@ tags:
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
  ``` 
  
-formula1:
+formula1:  
  ``` 
-$$n = x$$
+$$n = x$$  
  ``` 
  $$n = x$$
-formula2:  ``` $$n \neq x$$ ``` 
-$$n = x$$
-formula3:
- ``` \(m = y\) ``` 
-\(m = y\)
-formula4:
+formula2:   
+``` 
+$$n \neq x$$
+``` 
+$$n = x$$  
+formula3:  
+ ``` 
+ \(m = y\) 
+ ``` 
+\(m = y\)  
+formula4:  
  ```
  $$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$
 \\(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\\)
@@ -43,4 +48,4 @@ $$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$
 \\(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\\)
 
 
-![](http://chart.googleapis.com/chart?cht=tx&chl= 在此插入Latex公式)
+![](http://chart.googleapis.com/chart?cht=tx&chl=\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})
