@@ -1,3 +1,4 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 ---
 layout:     post
 title:      "markdown中插入公式的几种方法"
@@ -9,7 +10,7 @@ tags:
     - 基础
 ---
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
 
 ## 方法
 $$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$
