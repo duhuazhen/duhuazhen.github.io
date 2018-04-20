@@ -1,13 +1,12 @@
 ---
-layout:      post
-title:       "机器学习(1)"
-subtitle:    "聚类问题"
-date:        2016-01-29 12:00:00
-author:      "DuHuazhen"
+layout:     post
+title:      机器学习(1)
+date:       2016-01-29 12:00:00
+author:     "DuHuazhen"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
-    - 机器学习
+    - 机器学习
 ---
 
 <script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
