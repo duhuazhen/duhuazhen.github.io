@@ -8,9 +8,9 @@ tags:
     - 机器学习
 ---
 
-转自：[https://medium.mybridge.co/learn-to-build-a-machine-learning-application-from-top-articles-of-2017-cdd5638453fc](https://medium.mybridge.co/learn-to-build-a-machine-learning-application-from-top-articles-of-2017-cdd5638453fc)
-[https://github.com/Mybridge/learn-machine-learning](https://github.com/Mybridge/learn-machine-learning)
-[https://blog.csdn.net/dqcfkyqdxym3f8rb0/article/details/79251305](https://blog.csdn.net/dqcfkyqdxym3f8rb0/article/details/79251305)
+转自：[https://medium.mybridge.co/learn-to-build-a-machine-learning-application-from-top-articles-of-2017-cdd5638453fc](https://medium.mybridge.co/learn-to-build-a-machine-learning-application-from-top-articles-of-2017-cdd5638453fc)  
+[https://github.com/Mybridge/learn-machine-learning](https://github.com/Mybridge/learn-machine-learning)  
+[https://blog.csdn.net/dqcfkyqdxym3f8rb0/article/details/79251305](https://blog.csdn.net/dqcfkyqdxym3f8rb0/article/details/79251305)  
 
 
 根据《纽约时报》的说法，“在硅谷招募机器学习工程师、数据科学家的情形，越来越像NFL选拔职业运动员，没有苛刻的训练很难上场了。”毕竟，高达124472美元的平均年薪可不是谁想挣就能挣到的。
