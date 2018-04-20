@@ -13,7 +13,7 @@ tags:
 
 ##  一 、TensorFlow教程资源
 
-TensorFlow 官方博客[http://blog.tensorflow.org/]（http://blog.tensorflow.org/）与 [TensorFlow YouTube](https://www.youtube.com/watch?v=3d34Hkf7KXA) 频道；
+TensorFlow 官方博客[http://blog.tensorflow.org/](http://blog.tensorflow.org/)与 [TensorFlow YouTube](https://www.youtube.com/watch?v=3d34Hkf7KXA) 频道；
 
 #### 1)适合初学者的TensorFlow教程和代码示例：  
 
