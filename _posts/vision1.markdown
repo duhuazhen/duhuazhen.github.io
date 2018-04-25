@@ -1,0 +1,945 @@
+---
+layout:     post
+title:      基于视觉的人体目标跟踪(1)
+date:       2018-01-02 12:00:00
+author:     "DuHuazhen"
+header-img: "img/post-bg-os-metro.jpg"
+catalog: true
+tags:
+    - 人体目标跟踪
+---
+## 目标跟踪
+  近几年目标跟踪领域取得了显著地发展，尤其是在相关滤波和深度学习的“助攻”下，目标跟踪取得了显著地改善，关于目标跟踪的发展综述可以阅读下面
+这篇文章：[https://www.zhihu.com/question/26493945](https://www.zhihu.com/question/26493945)  
+  目标跟踪（特指单目标跟踪）是指：给出目标在跟踪视频第一帧中的初始状态（如位置、尺度），自动后续帧中估计目标的状态。  
+  对于一个输入视频或图像序列，手动或者自动检测到目标，将目标的状态作为目标跟踪的初始状态，同时对目标建模，获取相关特征构造目标的描述模型，然后在后续的图像中利用目标模型，
+  采取统计滤波或者密度估计的方式估计目标的当前状态，同时利用当前状态更新目标模型。跟踪框架如下：  
+     输入—目标初始化—特征提取—目标模型—目标搜索—输出  
+### 1、目标检测
+在目标的初始化阶段，可以是自动检测运动目标，如智能监控中通过与固定背景的比较，获得运动目标；也可以是手动标记目标，通常是用一个初始的框来框定目标。
+    
+###  2、目标描述（包括特征提取和目标模型两部分）
+在获取目标的初始状态后，就要提取目标的特征；在目标的特征的基础上，构建目标描述模型，模型可分为生成式模型和判别式模型。生成式模型主要是通过计算目标和样本的联合概率，找到与目标模型最相近的样本作为当前目标状态的估计。判别式模型则使计算条件概率，直接判断样本是否为目标。在这里需补充：经典目标跟踪方法中，当前的跟踪算法也可以分成生产式（generative model）和判别式（discriminantive model）两大类。生产式方法运用生成模型描述目标的表现特征，之后通过搜索候选目标来最小化重构误差（即寻找最佳匹配窗口）；生产式方法着眼于对目标本身的刻画，忽略背景信息，在目标自身变化剧烈或者被遮挡时容易产生漂移。判别式方法通过训练分类器来区分目标和背景（即从背景中区分目标）。
+    判别式方法因为显著区分背景和前景的信息，表现更为鲁棒，在目标跟踪领域占据主流地位。近年来，基于相关滤波（correlation filter）的跟踪方法因为速度快，效果好吸引了众多的研究目光。相关滤波器通过将输入特征回归为目标高斯分布来训练filters。并在后续跟踪中寻找预测分布中的响应峰值来定位目标的位置。相关滤波器在运算中巧妙应用快速傅立叶变换获得了大幅度速度提升。注：在后面的内容中将会有对核化相关滤波器（kernelized correlation filter, KCF）算法跟踪的描述。
+### 3、目标搜索
+如何在一帧的图像中获取目标候选样本，是影响跟踪算法效率的重要因素之一。贝叶斯滤波、核密度估计和水平集方法是3中典型的目标搜索方式，贝叶斯滤波实在时间序列上利用贝叶斯公式，可实现非高斯非线性情形下的预测；核密度估计方法本质上一种梯度下降方法，通过不断的迭代逐步找到函数的极值点；水平集是将二维数据转换为三维数据，将目标的轮廓用零水平集来表示，这种方法可以自然地处理目标形变。
+###  4、模型更新
+由于目标在跟踪过程中不停的发生变化，而当前的模型只能含有之前目标样本信息，不能反映目标的变化。当目标变化较大时，无法识别出目标，导致目标丢失；若快速更新目标模型，就会形成误差的积累，产生模型的漂移现象。因此，模型的更新是一个两难的问题，如何合理地更新目标模型，使能够准确地适应目标的变化，同时避免模型漂移导致的跟踪失败，也是目标跟踪中得一个重要研究内容。
+## 相关滤波
+由于我们考虑的是人体的目标的实时跟踪，而最近提出的基于深度学习的目标跟踪方法实时性还不能得到满足，且大部分需要GPU加速，因此我们
+考虑使用相关滤波来作为视觉目标跟踪的算法，在Chen Zhe 2015年发表的 An Experimental Survey on Correlation Filter-based Tracking文章里，
+他总结了近年来相关滤波视觉跟踪方法。相关滤波器跟踪框架如下：
+ 输入—特征提取 —（余弦窗）—（傅里叶变换）—（傅立叶逆变换） —（相关滤波器） —确定最大响应值 —更新目标位置 
+
+### 1、输入
+初始化，确定当前输入，并根据视频的第一帧中目标位置提取的特征，训练、学习得到相关滤波器；
+
+### 2、特征提取
+对于随后的每一帧，裁剪下之前的预测区域，从上一帧目标区域提取特征用来检测；可以从原始的输入数据中提取大量特征，通常情况下，为了平滑结果，我们会加上一个余弦窗口；
+
+### 3、确定最大响应值
+利用余弦傅里叶变换类替代卷积操作（提升计算效率），即做傅里叶变换，然后与相关滤波器相乘，结果做傅里叶逆变换，最大响应区就是要跟踪的目标新位置；
+
+### 4、更新目标位置
+新位置区域训练、更新得到新的相关滤波器，用于之后的观测。 
+
+考虑到效率和稳定性的原因我们采用KCF相关滤波器，相关滤波的推导可参考文献[1]或者：[https://blog.csdn.net/lk798362252/article/details/51030248](https://blog.csdn.net/lk798362252/article/details/51030248)
+而且作者开源了相应的c++代码[http://www.robots.ox.ac.uk/~joao/circulant/index.html](http://www.robots.ox.ac.uk/~joao/circulant/index.html)，方便我们做进一步开发，此外，其他的
+c++相关滤波代码可以在这里找[https://zhuanlan.zhihu.com/p/27542268](https://zhuanlan.zhihu.com/p/27542268)，因为大部分
+算法都只编写了matlab代码，不方便做开发。
+## 相机的选择
+    由于在人体目标跟踪中，需要实时获取人体与摄像头之间的距离和角度信息，因此我们使用了RGB-D摄像头Kinect，能够实时
+ 获得人体目标的深度信息。
+     部分代码如下：
+ ```cpp
+ #include <QApplication>
+#include "cv.h"
+#include "highgui/highgui.hpp"
+#include <opencv.hpp>
+
+#include<imgproc/imgproc.hpp>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
+//#include "auto_tmain.h"
+//OpenCV c函数头文件
+#include "opencv/cv.h"
+#include "opencv/highgui.h"
+
+//OpenCV c++函数头文件
+#include <opencv2/core/core.hpp>
+#include<math.h>
+#include<QTime>
+
+#include <XnCppWrapper.h>  //OpenNI的头文件
+#include "ros/ros.h"                //ROS必要的文件
+#include "std_msgs/Int16.h"  //16位数组消息类型
+#include "std_msgs/Int32.h"  //32位数组消息类型
+#include "std_msgs/Float64.h"
+#include "std_msgs/Empty.h"
+//#include <sstream>
+#include <string>
+#include <sensor_msgs/JointState.h>
+#include <tf/transform_broadcaster.h>
+//#include <tf2_ros/transform_broadcaster.h>
+//#include <tf/transform_broadcaster.h>
+#include <nav_msgs/Odometry.h>
+////#include <pcl_ros/point_cloud.h>
+#include <cmath>
+#include<QtConcurrent/QtConcurrent>
+// initial position
+#include<QFile>
+#include<QTime>
+
+#define  u_char unsigned char
+#define  DIST 0.5
+#define  NUM 20
+#define pi 3.1415926
+using namespace cv;
+using namespace std;
+
+using namespace xn; // OpenNI的命名空间
+//全局变量
+bool pause1 = false;
+bool is_tracking = false;
+Rect drawing_box;
+Rect Box;//moban
+Mat cvBGRImg, cvDepthImg,moban;
+double *hist1, *hist2;
+double *m_wei;
+double *m_wei_;//权值矩阵
+double C = 0.0;																   //归一化系数
+int p_x=0;//框中心
+int p_y=0;
+int p_x1=0,p_y1=0;
+int dis;
+Point q1;
+Point q2;
+int man_x;
+int man_y;
+uint sum_x;
+uint sum_y;
+int min_x=0;
+int min_y=0;
+int max_x=0;
+int max_y=0;
+uint sum_d=0;
+std_msgs::Int16 V_L;
+std_msgs::Int16 V_R;
+int dis_moban=5;
+float ckb;
+int k=0;
+//编码器的值
+double right_enc=0;
+double left_enc=0;
+double right_enc_old=0;
+double left_enc_old=0;
+double dtcout = 0;
+double dis_erro;
+int dis_man=0;//质心深度
+int dis_man_x=0;//质心水平距离
+double h, dist;
+bool mobanhz =true;//模板制作标志位
+bool tracking=false;
+int man_zx=0;//框中心深度，求模板用
+int *man_z;//深度变化，求姿态用
+int limit_mx=0,limit_my=0,limit_nx=9,limit_ny=0;//限制框大小
+double angle=0;
+bool disappear =false;
+//QTime t;
+int u,uv;
+double Kp;
+double sum_angle=0;
+double KI;
+double KD;
+double Kpv;
+
+double diff_angle=0;
+double angle_2=0;
+double Bhatta=0;
+int dis_man2_true=0;
+double angle2=0;
+int dis_man_x2=0;
+
+
+QFile file1("/home/wangyanan/Qt5.9.1/QFile/kalman.txt");
+//QFile file2("/home/wangyanan/Qt5.9.1/QFile/b.txt");
+double kalman_Px=0;
+double kalman_Py=0;
+int zhen_count=1;
+double t;
+double t_process=0.0;
+//int kf=1;
+
+
+std_msgs::Float64 speedl_2;
+std_msgs::Float64 speedr_2;
+bool theta_start=false;
+double theta_car=0.0;
+double controltime=0.0;
+double cha_kalman=0.0,cha_messure=0.0,cha_c=0.0;
+QTime t1;
+QTime time_car;
+
+
+void SPL_1(const std_msgs::Float64& spe_m1)
+{
+    controltime=t1.elapsed();
+    cout << "time1:" << controltime;
+    cout << endl;
+    speedl_2.data = spe_m1.data / 100;
+    std::cout << "L" << speedl_2 << endl;
+    t1.start();
+}
+
+
+void init_target(double *hist1, double *m_wei, Mat moban)
+{
+    Mat pic_hist(300,300,CV_8UC3) ;
+    int t_h, t_w, t_x, t_y;
+
+    int i, j;
+    int q_r, q_g, q_b, q_temp;
+
+    t_h = drawing_box.height;
+    t_w = drawing_box.width;
+    t_x = drawing_box.x;
+    t_y = drawing_box.y;
+
+    h = pow(((double)t_w) / 2, 2) + pow(((double)t_h) / 2, 2);			//带宽
+
+
+    //初始化权值矩阵和目标直方图
+    for (i = 0; i < t_w*t_h; i++)
+    {
+        m_wei[i] = 0.0;
+    }
+
+    for (i = 0; i<4096; i++)
+    {
+        hist1[i] = 0.0;
+    }
+
+    for (i = 0; i < t_h; i++)
+    {
+        for (j = 0; j < t_w; j++)
+        {
+            dist = pow(i - (double)t_h / 2, 2) + pow(j - (double)t_w / 2, 2);
+            dist = pow(dist, 1 / 2);
+            m_wei[i * t_w + j] = 1 - dist / h;
+            //printf("%f\n",m_wei[i * t_w + j]);
+            C += m_wei[i * t_w + j];
+        }
+    }
+
+    //计算目标权值直方
+    for (i = t_y; i < t_y + t_h; i++)
+    {
+        for (j = t_x; j < t_x + t_w; j++)
+        {
+            //rgb颜色空间量化为16*16*16 bins
+            q_r = ((u_char)moban.at<Vec3b>(i, j)[2]) / 16;
+            q_g = ((u_char)moban.at<Vec3b>(i, j)[1]) / 16;
+            q_b = ((u_char)moban.at<Vec3b>(i, j)[0]) / 16;
+            q_temp = q_r * 256 + q_g * 16 + q_b;
+            hist1[q_temp] = hist1[q_temp] + m_wei[(i - t_y) * t_w + (j - t_x)];
+        }
+    }
+    //归一化直方图
+    for (i = 0; i<4096; i++)
+    {
+        hist1[i] = hist1[i] / C;
+        //printf("%f\n",hist1[i]);
+    }
+
+    //生成目标直方图
+    double temp_max = 0.0;
+
+    for (i = 0; i < 4096; i++)			//求直方图最大值，为了归一化
+    {
+        //printf("%f\n",val_hist[i]);
+        if (temp_max < hist1[i])
+        {
+            temp_max = hist1[i];
+        }
+    }
+    //画直方图
+    Point p1, p2;
+    double bin_width = (double)pic_hist.rows / 4096;
+    double bin_unith = (double)pic_hist.cols / temp_max;
+
+    for (i = 0; i < 4096; i++)
+    {
+        p1.x = i * bin_width;
+        p1.y = pic_hist.cols;
+        p2.x = (i + 1)*bin_width;
+        p2.y = pic_hist.cols - hist1[i] * bin_unith;
+        //printf("%d,%d,%d,%d\n",p1.x,p1.y,p2.x,p2.y);
+        rectangle(pic_hist, p1, p2, cvScalar(0, 255, 0), -1, 8, 0);
+    }
+    imwrite("hist1.jpg", pic_hist);
+    delete[] m_wei_;
+
+}
+
+void MeanShift_Tracking(Mat cvBGRImg)
+{
+    int num = 0, i = 0, j = 0;
+    int t_w = 0, t_h = 0, t_x = 0, t_y = 0;
+    double *w = 0, *hist2 = 0;
+    double sum_w = 0, x1 = 0, x2 = 0, y1 = 2.0, y2 = 2.0,pw=0;
+    int q_r, q_g, q_b;
+    int *q_temp;
+    Mat pic_hist(300,300,CV_8UC3);
+
+    t_w = drawing_box.width;
+    t_h = drawing_box.height;
+    h = pow(((double)t_w) / 2, 2) + pow(((double)t_h) / 2, 2);			//带宽
+    m_wei_ = new double[t_w*t_h];
+    for (i = 0; i < t_h; i++)
+    {
+        for (j = 0; j < t_w; j++)
+        {
+            dist = pow(i - (double)t_h / 2, 2) + pow(j - (double)t_w / 2, 2);
+            dist = pow(dist, 1 / 2);
+            m_wei_[i * t_w + j] = 1 - dist / h;
+            //printf("%f\n",m_wei[i * t_w + j]);
+            C += m_wei_[i * t_w + j];
+        }
+    }
+    //生成直方图图像
+    hist2 = new double[4096];
+    w = new double[4096];
+    q_temp = new int[t_w*t_h];
+
+    while ((pow(y2, 2) + pow(y1, 2) > 0.5) && (num < NUM))
+    {
+        num++;
+        t_x = drawing_box.x;
+        t_y = drawing_box.y;
+        memset(q_temp, 0, sizeof(int)*t_w*t_h);
+        for (i = 0; i<4096; i++)
+        {
+            w[i] = 0.0;
+            hist2[i] = 0.0;
+        }
+
+        for (i = t_y; i < t_h + t_y; i++)
+        {
+            for (j = t_x; j < t_w + t_x; j++)
+            {
+                //rgb颜色空间量化为16*16*16 bins
+                q_r = ((u_char)cvBGRImg.at<Vec3b>(i, j)[2]) / 16;
+                q_g = ((u_char)cvBGRImg.at<Vec3b>(i, j)[1]) / 16;
+                q_b = ((u_char)cvBGRImg.at<Vec3b>(i, j)[0]) / 16;
+                q_temp[(i - t_y) *t_w + j - t_x] = q_r * 256 + q_g * 16 + q_b;
+                hist2[q_temp[(i - t_y) *t_w + j - t_x]] = hist2[q_temp[(i - t_y) *t_w + j - t_x]] + m_wei[(i - t_y) * t_w + j - t_x];
+            }
+        }
+
+        //归一化直方图
+        for (i = 0; i<4096; i++)
+        {
+            hist2[i] = hist2[i] / C;
+            //printf("%f\n",hist2[i]);
+        }
+        //生成目标直方图
+        double temp_max = 0.0;
+
+        for (i = 0; i<4096; i++)			//求直方图最大值，为了归一化
+        {
+            if (temp_max < hist2[i])
+            {
+                temp_max = hist2[i];
+            }
+        }
+        //画直方图
+        CvPoint p1, p2;
+        double bin_width = (double)pic_hist.rows/ (4368);
+        double bin_unith = (double)pic_hist.cols / temp_max;
+
+        for (i = 0; i < 4096; i++)
+        {
+            p1.x = i * bin_width;
+            p1.y = pic_hist.cols;
+            p2.x = (i + 1)*bin_width;
+            p2.y = pic_hist.cols - hist2[i] * bin_unith;
+            rectangle(pic_hist, p1, p2, cvScalar(0, 255, 0), -1, 8, 0);
+        }
+
+
+        for (i = 0; i < 4096; i++)
+        {
+            if (hist2[i] != 0)
+            {
+                w[i] = sqrt(hist1[i] / hist2[i]);
+            }
+            else
+            {
+                w[i] = 0;
+            }
+        }
+
+        sum_w = 0.0;
+        x1 = 0.0;
+        x2 = 0.0;
+
+        for (i = 0; i < t_h; i++)
+        {
+            for (j = 0; j < t_w; j++)
+            {
+                //printf("%d\n",q_temp[i * t_w + j]);
+                sum_w = sum_w + w[q_temp[i * t_w + j]];
+                x1 = x1 + w[q_temp[i * t_w + j]] * (i - t_h / 2);
+                x2 = x2 + w[q_temp[i * t_w + j]] * (j - t_w / 2);
+            }
+        }
+        cout<<"Bhattacharyya:"<<sum_w<<endl;
+        Bhatta=sum_w;
+        pw=sum_w/t_h/t_w;
+        for(i=0;i<t_h;i++)
+        {
+            for(j=0;j<t_w;j++)
+            {
+               if(w[q_temp[i*t_w+j]]<pw)
+               {
+//                   hist1[q_temp[i*t_w+j]]=0;
+//                   for(int n=0;n<3;n++)
+//                           cvBGRImg.at<uchar>(drawing_box.y+i,(drawing_box.x+j)*3+n)=0; //quchubeijing
+               }
+            }
+        }
+        y1 = x1 / sum_w;
+        y2 = x2 / sum_w;
+
+        //中心点位置更新
+        drawing_box.x += y2;
+        drawing_box.y += y1;
+
+    }
+    delete[] hist2;
+    delete[] w;
+    delete[] q_temp;
+    delete[] m_wei_;
+    //显示跟踪结果
+
+    //rectangle(cvBGRImg, cvPoint(drawing_box.x, drawing_box.y), cvPoint(drawing_box.x + drawing_box.width, drawing_box.y + drawing_box.height), CV_RGB(0, 0, 255), 2);
+ //    rectangle(cvDepthImg, cvPoint(drawing_box.x, drawing_box.y), cvPoint(drawing_box.x + drawing_box.width, drawing_box.y + drawing_box.height), CV_RGB(0, 0, 255), 2);
+    p_x = (drawing_box.x + drawing_box.x + drawing_box.width) / 2;
+    p_y = (drawing_box.y + drawing_box.y + drawing_box.height) / 2;
+    //circle(cvBGRImg,Point(p_x,p_y),2,Scalar(255,0,0));
+    //circle(cvBGRImg, q1, 2, cv::Scalar(255, 0, 0));
+}
+
+int main(int argc, char* argv[])
+{
+    QApplication a(argc, argv);
+    XnStatus result = XN_STATUS_OK;  //OpenNI函数的返回结果
+    DepthMetaData depthMD; //OpenNI深度数据
+    ImageMetaData imageMD; //OpenNI彩色数据
+
+    namedWindow("depth",WINDOW_NORMAL);
+    namedWindow("RGB",WINDOW_NORMAL);
+    //namedWindow("masterplate",WINDOW_NORMAL);
+
+    //namedWindow("coordinate",WINDOW_NORMAL);
+    //Mat coord(700,500,CV_8UC3,Scalar(255,255,255));
+    //coinit(coord);
+    //imshow("coordinate",coord);
+    // 创建并初始化设备上下文
+    Context context;
+    result = context.Init();
+    if (XN_STATUS_OK != result)
+        cerr << "设备上下文初始化错误" << endl;
+
+    // 创建深度生成器和彩色生成器
+    DepthGenerator depthGenerator;
+    result = depthGenerator.Create(context);
+    if (XN_STATUS_OK != result)
+        cerr << "创建深度生成器错误" << endl;
+    ImageGenerator imageGenerator;
+    result = imageGenerator.Create(context);
+    if (XN_STATUS_OK != result)
+        cerr << "创建彩色生成器错误" << endl;
+    UserGenerator mUserGenerator;
+    result=mUserGenerator.Create(context);
+    if(XN_STATUS_OK != result)
+        cerr<<"创建用户创建失败"<<endl;
+    XnUInt16 nUsers;
+    //通过映射模式来设置生成器参数，如分辨率、帧率
+    XnMapOutputMode mapMode;
+    mapMode.nXRes = 320;
+    mapMode.nYRes = 240;
+    mapMode.nFPS = 30;
+    result = depthGenerator.SetMapOutputMode(mapMode);
+    result = imageGenerator.SetMapOutputMode(mapMode);
+
+    // 将深度生成器的视角对齐到彩色生成器，将深度数据配准到彩色数据
+    depthGenerator.GetAlternativeViewPointCap().SetViewPoint(imageGenerator);
+    //imageGenerator.GetAlternativeViewPointCap().SetViewPoint(depthGenerator); //彩色图配准到深度图
+
+    // 启动所有生成器，即启动数据流
+    result = context.StartGeneratingAll();
+    result = context.WaitNoneUpdateAll();
+    if (XN_STATUS_OK == result)
+    {
+        //获取一帧深度图并转换为OpenCV中的图像格式
+        depthGenerator.GetMetaData(depthMD);
+        Mat cvRawImg16U(depthMD.FullYRes(), depthMD.FullXRes(), CV_16UC1, (char *)depthMD.Data());
+        cvRawImg16U.convertTo(cvDepthImg, CV_8U, 255.0 / (depthMD.ZRes()));
+
+
+        //获取一帧彩色图并转换为OpenCV中的图像格式
+        imageGenerator.GetMetaData(imageMD);
+        Mat cvRGBImg(imageMD.FullYRes(), imageMD.FullXRes(), CV_8UC3, (char *)imageMD.Data());
+        cvtColor(cvRGBImg, cvBGRImg, CV_RGB2BGR);
+
+
+        waitKey(1); //没有waitKey不显示图像
+    }
+        ros::init(argc, argv, "MasterRobot1");     //设置唯一的节点
+        QtConcurrent::run([]()
+        {
+             ros::NodeHandle n;      //节点句柄
+
+             //fa bu qi chu shi hua
+
+            ros::Publisher SL_pub = n.advertise<std_msgs::Int16>("motorL_3", 10);
+            ros::Publisher SR_pub = n.advertise<std_msgs::Int16>("motorR_3", 10);
+            ros::Subscriber sub4 = n.subscribe("SpeedL_3", 1000, &SPL_1);
+            //ros::Subscriber sub5 = n.subscribe("SpeedR_1", 1000, &SPR_1);
+
+            ros::Time current_time;
+            ros::Time last_time;
+            current_time = ros::Time::now();
+            last_time = ros::Time::now();
+
+
+            ros::Rate loop_rate(125);  //发送速率为20hz
+
+            //message declarations
+            while (true)	//收到Ctrl+C 后停止
+            {
+
+                V_L.data=0;
+                V_R.data=0;
+                Kp=40;
+                KI=0.01;
+                KD=0;
+
+
+                sum_angle=sum_angle+angle;
+                u=angle*Kp+sum_angle*KI;
+
+                V_L.data=0.5*int(u);
+                V_R.data=0.5*int(u);
+
+
+
+
+
+
+//               if(dis_man>1500)
+//                {
+
+
+//                    V_L.data=V_L.data+10;
+//                    V_R.data=V_R.data-10;
+//                }
+//               if(uv>0)
+//                {
+//                     V_L.data=V_L.data+uv;
+//                     V_R.data=V_R.data-uv;
+//                }
+				v
+//               while(V_L.data>30)
+//               {
+//               V_L.data=V_L.data-1;
+//               V_R.data=V_R.data+1;
+
+//               }
+//               while(V_R.data<-30)
+//               {
+//               V_R.data=V_R.data+1;
+//               V_L.data=V_L.data-1;
+//               }
+
+               cout<<"左轮线速度"<<V_L.data<<endl;
+               cout<<"右轮线速度"<<-1*V_R.data<<endl;
+               current_time = ros::Time::now();
+
+               last_time = current_time;
+
+               SL_pub.publish(V_L);
+               SR_pub.publish(V_R);
+
+
+               ros::spinOnce();    //如果有订阅者出现，ROS就会更新和读取所有主题
+               loop_rate.sleep();	//按照20hz的频率挂起
+
+
+//               while(!theta_car)
+//               {
+//                   NULL;
+//               }
+//               controltime=controltime/1000;
+//               theta_car=theta_car+atan(V_L.data*controltime/15);
+//               kf++;
+
+            }
+
+        });
+   int Q=1,R=2;
+   double X=0,Z=0,Zmodel=0;
+   double X_pre=0,Z_pre=0,P0=100,Kg=0,P1=0,Pz=0,err_P=0,Err=0,Kz=0;;
+    while (1)
+    {
+        //t.start();
+        if (is_tracking)
+        {
+            time_car.start();
+            MeanShift_Tracking(cvBGRImg);
+
+            dis=depthMD(p_x,p_y);
+            sum_x=sum_y=sum_d=0;
+            min_x=max_x=p_x;
+            min_y=min_y=p_y;
+            if((drawing_box.y-drawing_box.height/4)<=0)
+                limit_ny=0;
+            else
+                limit_ny=drawing_box.y-drawing_box.height/4;
+            if((drawing_box.y+drawing_box.height+drawing_box.height/4)>=240)
+                limit_my=240;
+            else
+                limit_my=drawing_box.y+drawing_box.height+drawing_box.height/4;
+            if((drawing_box.x-drawing_box.width/4)<=0)
+                limit_nx=0;
+            else
+                limit_nx=drawing_box.x-drawing_box.width/4;
+            if((drawing_box.x+drawing_box.width+drawing_box.width/4)>=320)
+                limit_mx=320;
+            else
+                limit_mx=drawing_box.x+drawing_box.width+drawing_box.width/4;
+            for(int i=limit_ny;i<limit_my;i++)
+            {
+                for(int j=limit_nx;j<limit_mx;j++)
+                {
+                    if(abs(depthMD(j,i)-dis)<150)
+                    {
+                        sum_x=sum_x+j;
+                        sum_y=sum_y+i;
+                        sum_d=sum_d+1;
+
+                    }
+                }
+            }
+            for(int i=p_x-1;i>=limit_nx;i--)
+            {
+                if(abs(depthMD(i,p_y)-dis)<150)
+                    min_x=i;
+                else
+                    break;
+            }
+            for(int i=p_x+1;i<=limit_mx;i++)
+            {
+                if(abs(depthMD(i,p_y)-dis)<150)
+                    max_x=i;
+                else
+                    break;
+            }
+            for(int i=p_y-1;i>=limit_ny;i--)
+            {
+                if(abs(depthMD(p_x,i)-dis)<150)
+                    min_y=i;
+                else
+                    break;
+            }
+            for(int i=p_y+1;i<=limit_my;i++)
+            {
+                if(abs(depthMD(p_x,i)-dis)<150)
+                    max_y=i;
+                else
+                    break;
+            }
+            man_x=sum_x/sum_d;
+            man_y=sum_y/sum_d;
+            q1.x=man_x;
+            q1.y=man_y;
+            //dis_man=depthMD(man_x,man_y);
+            dis_man=depthMD(p_x,p_y);
+            dis_man_x=depthMD(p_x,p_y)*(p_x-158.93)/271.33;
+            //angle=atan((double)dis_man_x/dis_man);
+            angle2=atan((double)dis_man_x/dis_man);
+
+            circle(cvBGRImg, q1, 2, cv::Scalar(255, 0, 0));
+            rectangle(cvBGRImg, cvPoint(min_x, min_y), cvPoint(max_x, max_y), CV_RGB(0, 255, 0), 2);
+            //angle_meansure=atan((double)dis_man_x/dis_man);
+
+            t=time_car.elapsed();
+            if(zhen_count==1)
+            {
+                //angle=atan((double)dis_man_x/dis_man);
+                //X_pre=dis_man;
+                Z_pre=angle2;
+                theta_car=0;
+                Zmodel=angle2;
+            }
+            else
+            {
+                t_process=t/1000;
+                //cout<<t_process<<endl;
+                theta_car=((double)V_L.data*t_process)/15;
+            }
+           if(zhen_count>=1)
+            {
+                Zmodel=Z_pre-theta_car+0.01;
+                Z= Z_pre-theta_car;
+
+                //卡尔曼滤波
+                P1=P0+Q;
+                //Kg=P1/(P1+R);55v5de
+                Pz=P1+R;
+                Err=angle2-Z;
+                if((Err*Err/Pz)>0.00016)
+                {
+                    Kz=(((Err*Err)/0.00016)-Pz+R)/R;
+
+                }
+                else
+                {
+                    Kz=1;
+
+                }
+                 Kg=P1/(P1+Kz*R);
+
+                //X_pre=X+Kg*(dis_man-X);  //深度
+                Z_pre=Z+Kg*(angle2-Z);     //角度
+                P0=(1-Kg)*P1;
+
+
+                angle=Z_pre;
+
+                cha_kalman=angle-Zmodel;
+                cha_messure=angle2-Zmodel;
+                cha_c=cha_kalman-cha_messure;
+
+                if(!file1.open(QIODevice::WriteOnly|QIODevice::Append))
+                {
+                   cout<<"erro"<<endl;
+                   return -1;
+                }
+                else
+                {
+                    QTextStream out(&file1);
+                    //out<<"Err^2/Pz:"<<Err*Err/Pz<<" Pz:"<<Pz<<endl;
+                    //out<<"Kz:"<<Kz<<endl;
+                    //out<<"time_End:"<<time_End<<"time_start:"<<time_Start<<endl;
+                    //out<<time_End-time_Start<<endl;
+
+                    out<<angle<<endl;
+                    out<<Zmodel<<endl;
+                    out<<angle2<<endl;
+                    //out<<"Kz:"<<Kz<<endl;
+                }
+            file1.close();
+            zhen_count++;
+
+               }
+
+//            circle(cvBGRImg, q1, 2, cv::Scalar(255, 0, 0));
+//            rectangle(cvBGRImg, cvPoint(min_x, min_y), cvPoint(max_x, max_y), CV_RGB(0, 255, 0), 2);
+
+//            angle=atan((double)dis_man_x/dis_man);
+////            angle=angle/pi*180;
+////            cout<<"angle"<<angle<<endl;
+           free(man_z);
+
+        }
+
+
+ if(mobanhz==true)
+ {
+     result = context.WaitNoneUpdateAll();
+     if (XN_STATUS_OK == result)
+     {
+
+    depthGenerator.GetMetaData(depthMD);
+    nUsers=mUserGenerator.GetNumberOfUsers();
+    Mat cvRawImg16U(depthMD.FullYRes(), depthMD.FullXRes(), CV_16UC1, (char *)depthMD.Data());
+    cvRawImg16U.convertTo(cvDepthImg, CV_8U, 255.0 / (depthMD.ZRes()));
+
+
+    //获取一帧彩色图并转换为OpenCV中的图像格式
+    imageGenerator.GetMetaData(imageMD);
+    Mat cvRGBImg(imageMD.FullYRes(), imageMD.FullXRes(), CV_8UC3, (char *)imageMD.Data());
+    cvtColor(cvRGBImg, cvBGRImg, CV_RGB2BGR);
+
+//        cout<<nUsers<<endl;
+    if(nUsers>2)
+        cout<<"屏幕中人数大于1人"<<endl;
+    else if(nUsers>0)
+    {
+    XnUserID*aUserID=new XnUserID[nUsers];
+    mUserGenerator.GetUsers(aUserID,nUsers);
+    XnPoint3D*UserCoM=new XnPoint3D[nUsers];
+    XnPoint3D *RealPoint=new XnPoint3D[1];
+    XnPoint3D *projectPoints=new XnPoint3D[1];
+
+    mUserGenerator.GetCoM(aUserID[0],UserCoM[0]);
+    RealPoint[0].X=UserCoM[0].X;
+    RealPoint[0].Y=UserCoM[0].Y;
+    RealPoint[0].Z=UserCoM[0].Z;
+
+    depthGenerator.ConvertRealWorldToProjective(1,RealPoint,projectPoints);
+//        depthGenerator.ConvertRealWorldToProjective(1,UserCoM[0],pj[0]);
+    p_x=projectPoints[0].X;
+    p_y=projectPoints[0].Y;
+//            cout<<"x="<<UserCoM[0].X<<endl<<"y="<<UserCoM[0].Y<<endl<<"z="<<UserCoM[0].Z<<endl;
+//        p_x=UserCoM[0].X/UserCoM[0].Z*271+159;
+//        p_y=UserCoM[0].Y/UserCoM[0].Z*271+121;
+
+        q1.x=p_x;
+        q1.y=p_y;
+        man_zx=depthMD(p_x,p_y);
+//        cout<<dis_man<<endl;
+        int c=cvWaitKey(10);
+        //if(c=='l')
+        //{
+            tracking=true;
+        //}
+        if(tracking==true)
+        {
+        min_x=max_x=p_x;
+        min_y=max_y=p_y;
+       for(int i=(p_y-1);i>0;i--)
+       {
+        if(abs(depthMD(p_x,i)-man_zx)<100)
+            min_y=i;
+        else
+            break;
+       }
+       for(int i=(p_y+1);i<240;i++)
+       {
+           if(abs(depthMD(p_x,i)-man_zx)<100)
+            max_y=i;
+           else
+               break;
+       }
+       for(int i=(p_x-1);i>0;i--)
+       {
+           if(abs(depthMD(i,p_y)-man_zx)<100)
+               min_x=i;
+           else
+               break;
+       }
+        for(int i=(p_x+1);i<320;i++)
+        {
+            if(abs(depthMD(i,p_y)-man_zx)<100)
+                max_x=i;
+            else
+                break;
+        }
+        Box.x=min_x;
+        Box.y=min_y;
+        Box.width=max_x-min_x;
+        Box.height=max_y-min_y;
+        ckb=(float)drawing_box.height/drawing_box.width;
+//        cout<<"changkuanbi: "<<ckb<<endl;
+
+        if(k<100)
+        {
+            if(abs(ckb-2.53)<dis_moban);
+           { dis_moban=abs(ckb-2.53);
+
+            moban=cvBGRImg.clone();
+            circle(moban, q1, 2, cv::Scalar(0, 0, 255));
+            rectangle(moban, cvPoint(min_x, min_y), cvPoint(max_x, max_y), CV_RGB(0, 0, 255), 2);
+            drawing_box.x=Box.x;
+            drawing_box.y=Box.y;
+            drawing_box.width=Box.width;
+            drawing_box.height=Box.height;
+            }
+              k++;
+        }
+
+         rectangle(cvBGRImg, cvPoint(min_x, min_y), cvPoint(max_x, max_y), CV_RGB(0, 0, 255), 2);
+    }
+    }
+
+    circle(cvBGRImg, q1, 2, cv::Scalar(0, 0, 255));
+
+    waitKey(1); //没有waitKey不显示图像
+    if(k>=100)
+    {
+        imshow("masterplate",moban);
+        pause1=true;
+        while(pause1)
+        {
+        int c= cvWaitKey(1);
+        //if(c=='p')
+        //{
+            hist1 = new double [4096];
+            m_wei = new double[drawing_box.height*drawing_box.width];
+            init_target(hist1, m_wei, moban);
+            is_tracking = true;
+            mobanhz=false;
+            pause1 =false;
+            break;
+       // }
+        }
+    }
+    imshow("RGB", cvBGRImg);
+
+    imshow("depth", cvDepthImg);
+
+     }
+ }
+
+ else if(mobanhz==false)
+ {
+        int c = cvWaitKey(1);
+
+        if(c=='q')
+        {
+            dis_man=0;
+            break;
+        }
+        imshow("RGB", cvBGRImg);
+//        imwrite("RGB.jpg", cvBGRImg);
+        imshow("depth", cvDepthImg);
+        result = context.WaitNoneUpdateAll();
+        if (XN_STATUS_OK == result)
+        {
+            //获取一帧深度图并转换为OpenCV中的图像格式
+            depthGenerator.GetMetaData(depthMD);
+            Mat cvRawImg16U(depthMD.FullYRes(), depthMD.FullXRes(), CV_16UC1, (char *)depthMD.Data());
+            cvRawImg16U.convertTo(cvDepthImg, CV_8U, 255.0 / (depthMD.ZRes()));
+
+
+            //获取一帧彩色图并转换为OpenCV中的图像格式
+            imageGenerator.GetMetaData(imageMD);
+            Mat cvRGBImg(imageMD.FullYRes(), imageMD.FullXRes(), CV_8UC3, (char *)imageMD.Data());
+            cvtColor(cvRGBImg, cvBGRImg, CV_RGB2BGR);
+
+            waitKey(1); //没有waitKey不显示图像
+        }
+     }
+       if(cvWaitKey(1)=='q')
+       {    dis_man=0;
+            angle=0;
+            break;
+       }
+    }
+
+
+    context.StopGeneratingAll(); //停止数据流
+    context.Shutdown(); //关闭设备上下文
+    destroyWindow("depth");
+    destroyWindow("RGB");
+    return 0;
+}
+ ```
+
+
+
+[1]High-Speed Tracking with Kernelized Correlation Filters
