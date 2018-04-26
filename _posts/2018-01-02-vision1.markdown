@@ -50,7 +50,7 @@ c++相关滤波代码可以在这里找[https://zhuanlan.zhihu.com/p/27542268](h
 ## 相机的选择
 由于在人体目标跟踪中，需要实时获取人体与摄像头之间的距离和角度信息，因此我们使用了RGB-D摄像头Kinect，能够实时
 获得人体目标的深度信息。
-     部分代码如下：
+     部分代码如下(简单的meanshift算法)（基于kcf参照github：）：
  ```cpp
  #include <QApplication>
 #include "cv.h"
