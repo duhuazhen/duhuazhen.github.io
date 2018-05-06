@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      TensorFlow目标检测API和OpenCV实现实时目标检测和视频处理(1)
-subtitle:   环境安装
+subtitle:   环境安装及实时处理
 date:       2016-01-29 12:00:00
 author:     "DuHuazhen"
 header-img: "img/post-bg-2015.jpg"
@@ -23,6 +23,8 @@ github:[https://github.com/datitran/raccoon_dataset](https://github.com/datitran
 [Real-time and video processing object detection using Tensorflow, OpenCV and Docker.](https://towardsdatascience.com/real-time-and-video-processing-object-detection-using-tensorflow-opencv-and-docker-2be1694726e5)  
 github:[https://github.com/lbeaucourt/Object-detection](https://github.com/lbeaucourt/Object-detection)  
 
-
-
+本文是基于ubuntu14.04+tensorflow1.2(cpu)+python3.5+opencv3.1
+#### 安装anaconda
+##### 1、首先在anaconda官网上下载anaconda
+    这里下载的是anconda linux版本（pyton3.6版本）[https://www.anaconda.com/download/#linux](https://www.anaconda.com/download/#linux)， 另外安装了python3.5的环境[https://conda.io/docs/user-guide/tasks/manage-python.html](https://conda.io/docs/user-guide/tasks/manage-python.html)，
 
