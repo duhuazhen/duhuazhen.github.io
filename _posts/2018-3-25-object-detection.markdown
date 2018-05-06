@@ -45,7 +45,7 @@ source activate py35
 ``` python
 conda env create -f environment.yml
 ```
-来创造我们需要的环境，可是会出现如下错误
+来创造我们需要的环境，会帮我们安装好相应的tensorflow库以及其他python库，可是会出现如下错误
 ``` python
 (py35) hehe@hehe-OptiPlex-5040:~/anaconda3/envs/object_detector_app-master$ conda env create -f environment.yml
 Solving environment: failed
@@ -62,6 +62,13 @@ conda env create -f environment.yml
 ``` python
  conda install -c https://conda.anaconda.org/menpo opencv3  
  ```  
+ 对于在anaconda下单独安装tensorflow的方法参考：  
+ [https://blog.csdn.net/michaelliang12/article/details/60106686](https://blog.csdn.net/michaelliang12/article/details/60106686) 
+ [https://www.cnblogs.com/tiansheng/p/7281290.html](https://www.cnblogs.com/tiansheng/p/7281290.html)  
+ 上面的博客是通过把tensorflow下载下来的方式进行安装的我们也可以安装官网的方式来进行安装  
+ ``` python
+ pip install --ignore-installed --upgrade \https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.6.0-cp34-cp34m-linux_x86_64.whl
+ ``` 
  然后通过运行
 ``` python
 python object_detection_app.py Optional arguments (default value):
