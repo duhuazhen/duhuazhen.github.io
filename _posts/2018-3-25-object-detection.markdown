@@ -40,7 +40,7 @@ conda create -n py35 python=3.5 anaconda
 ``` python
 source activate py35
 ```
-##### 3 安装及运行目标检测库
+##### 3 安装目标检测库
 通过下面链接中的[https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection](https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection)命令
 ``` python
 conda env create -f environment.yml
@@ -62,14 +62,14 @@ conda env create -f environment.yml
 ``` python
  conda install -c https://conda.anaconda.org/menpo opencv3  
  ```  
- 对于在anaconda下单独安装tensorflow的方法参考：  
+ 对于在anaconda下单独安装tensorflow的方法参考(这里不需要单独安装)：  
  [https://blog.csdn.net/michaelliang12/article/details/60106686](https://blog.csdn.net/michaelliang12/article/details/60106686) 
  [https://www.cnblogs.com/tiansheng/p/7281290.html](https://www.cnblogs.com/tiansheng/p/7281290.html)  
- 上面的博客是通过把tensorflow下载下来的方式进行安装的我们也可以安装官网的方式来进行安装  
+ 上面的博客是通过把tensorflow下载下来的方式进行安装的我们也可以安装官网的方式[https://www.tensorflow.org/install/install_linux](https://www.tensorflow.org/install/install_linux)来进行安装  
  ``` python
  pip install --ignore-installed --upgrade \https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.6.0-cp34-cp34m-linux_x86_64.whl
  ``` 
- 然后通过运行
+##### 4  运行目标检测库
 ``` python
 python object_detection_app.py Optional arguments (default value):
 
