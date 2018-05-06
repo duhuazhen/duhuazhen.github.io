@@ -40,7 +40,7 @@ conda create -n py35 python=3.5 anaconda
 ``` python
 source activate py35
 ```
-### 3
+##### 3 安装及运行目标检测库
 通过下面链接中的[https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection](https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection)命令
 ``` python
 conda env create -f environment.yml
