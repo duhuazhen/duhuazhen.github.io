@@ -25,10 +25,52 @@ github:[https://github.com/lbeaucourt/Object-detection](https://github.com/lbeau
 
 本文是基于ubuntu14.04+tensorflow1.2(cpu)+python3.5+opencv3.1
 #### 安装anaconda
+conda 常用命令 [ttps://www.jianshu.com/p/2f3be7781451](https://www.jianshu.com/p/2f3be7781451)
+[ttps://blog.csdn.net/menc15/article/details/71477949](https://blog.csdn.net/menc15/article/details/71477949)
 ##### 1、首先在anaconda官网上下载anaconda
 这里下载的是anconda linux版本（pyton3.6版本）[https://www.anaconda.com/download/#linux](https://www.anaconda.com/download/#linux)， 另外安装了python3.5的环境[https://conda.io/docs/user-guide/tasks/manage-python.html](https://conda.io/docs/user-guide/tasks/manage-python.html)，
 ``` python
-conda create -n py36 python=3.6 anaconda
+conda create -n py35 python=3.5 anaconda
 ```
+上述命令中py35为环境名字，python=3.5为我们要创造的python版本，anaconda包含了所需要的所有python包。
 
+![screenshot-conda.io-2018-05-06-14-07-13.png](https://upload-images.jianshu.io/upload_images/11573595-49645abd962c203c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+##### 2 激活环境
+通过一下命令来激活我们所需要的环境
+``` python
+source activate py35
+```
+### 3
+通过下面链接中的[https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection](https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection)命令
+``` python
+conda env create -f environment.yml
+```
+来创造我们需要的环境，可是会出现如下错误
+``` python
+(py35) hehe@hehe-OptiPlex-5040:~/anaconda3/envs/object_detector_app-master$ conda env create -f environment.yml
+Solving environment: failed
 
+ResolvePackageNotFound: 
+  - opencv3==3.0.0=py35_0
+  - tbb==4.3_20141023=0
+```  
+可能时源的关系，找不到一些相应的库，于是我们删除找不到的库，具体参考我fork的自己的仓库，由于找不到相应的opencv库，我们通过手动安装相应的库  
+https://github.com/duhuazhen/object_detector_app
+``` python
+conda env create -f environment.yml
+```
+``` python
+ conda install -c https://conda.anaconda.org/menpo opencv3  
+ ```  
+ 然后通过运行
+``` python
+python object_detection_app.py Optional arguments (default value):
+
+    Device index of the camera --source=0
+    Width of the frames in the video stream --width=480
+    Height of the frames in the video stream --height=360
+    Number of workers --num-workers=2
+    Size of the queue --queue-size=5
+
+```
+来启动物体识别程序。
