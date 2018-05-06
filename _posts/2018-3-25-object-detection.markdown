@@ -27,4 +27,8 @@ github:[https://github.com/lbeaucourt/Object-detection](https://github.com/lbeau
 #### 安装anaconda
 ##### 1、首先在anaconda官网上下载anaconda
 这里下载的是anconda linux版本（pyton3.6版本）[https://www.anaconda.com/download/#linux](https://www.anaconda.com/download/#linux)， 另外安装了python3.5的环境[https://conda.io/docs/user-guide/tasks/manage-python.html](https://conda.io/docs/user-guide/tasks/manage-python.html)，
+``` python
+conda create -n py36 python=3.6 anaconda
+```
+
 
