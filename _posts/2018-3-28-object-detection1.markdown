@@ -12,6 +12,9 @@ tags:
 ---
 
 Ubuntu 16.04下搭建TensorFlow运行环境（用Anaconda） [https://blog.csdn.net/chenmaolin88/article/details/79370258](https://blog.csdn.net/chenmaolin88/article/details/79370258)  
+
 Ubuntu 16.04下安装TensorFlow Object Detection API(对象检测API)[https://blog.csdn.net/chenmaolin88/article/details/79371891](https://blog.csdn.net/chenmaolin88/article/details/79371891)  
+
 用TensorFlow训练一个物体检测器（手把手教学版）[https://blog.csdn.net/chenmaolin88/article/details/79357263](https://blog.csdn.net/chenmaolin88/article/details/79357263)  
+
 手把手教你图片打标 [https://blog.csdn.net/chenmaolin88/article/details/79357502](https://blog.csdn.net/chenmaolin88/article/details/79357502)  
