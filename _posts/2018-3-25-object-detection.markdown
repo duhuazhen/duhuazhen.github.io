@@ -54,8 +54,8 @@ ResolvePackageNotFound:
   - opencv3==3.0.0=py35_0
   - tbb==4.3_20141023=0
 ```  
-可能是源的关系，找不到一些相应的库，于是我们删除找不到的库，具体参考我fork的自己的仓库，由于找不到相应的opencv库，我们通过手动安装相应的库  
-https://github.com/duhuazhen/object_detector_app
+可能是源的关系，找不到一些相应的库，于是我们删除找不到的库，具体参考我fork的自己的仓库，由于找不到相应的opencv库，我们通过手动安装相应的库  
+[https://github.com/duhuazhen/object_detector_app](https://github.com/duhuazhen/object_detector_app)
 ``` python
 conda env create -f environment.yml
 ```
