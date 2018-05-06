@@ -1,7 +1,8 @@
 ---
 layout:     post
-title:      TensorFlow目标检测API和OpenCV实现实时目标检测和视频处理
-date:       2016-01-29 12:00:00
+title:      TensorFlow目标检测API和OpenCV实现实时目标检测和视频处理(1)
+subtitile:   环境安装
+date:       2016-01-29 12:00:00
 author:     "DuHuazhen"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
