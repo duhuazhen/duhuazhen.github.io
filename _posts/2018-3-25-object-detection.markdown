@@ -24,7 +24,7 @@ github:[https://github.com/datitran/raccoon_dataset](https://github.com/datitran
 github:[https://github.com/lbeaucourt/Object-detection](https://github.com/lbeaucourt/Object-detection)  
 
 本文是基于ubuntu14.04+tensorflow1.2(cpu)+python3.5+opencv3.1
-#### 安装anaconda
+##### anaconda常用命令
 conda 常用命令 [ttps://www.jianshu.com/p/2f3be7781451](https://www.jianshu.com/p/2f3be7781451)
 [ttps://blog.csdn.net/menc15/article/details/71477949](https://blog.csdn.net/menc15/article/details/71477949)
 ##### 1、首先在anaconda官网上下载anaconda
