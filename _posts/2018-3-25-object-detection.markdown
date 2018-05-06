@@ -36,7 +36,7 @@ conda create -n py35 python=3.5 anaconda
 
 ![screenshot-conda.io-2018-05-06-14-07-13.png](https://upload-images.jianshu.io/upload_images/11573595-49645abd962c203c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ##### 2 激活环境
-通过一下命令来激活我们所需要的环境
+通过以下命令来激活我们所需要的环境
 ``` python
 source activate py35
 ```
@@ -54,7 +54,7 @@ ResolvePackageNotFound:
   - opencv3==3.0.0=py35_0
   - tbb==4.3_20141023=0
 ```  
-可能时源的关系，找不到一些相应的库，于是我们删除找不到的库，具体参考我fork的自己的仓库，由于找不到相应的opencv库，我们通过手动安装相应的库  
+可能是源的关系，找不到一些相应的库，于是我们删除找不到的库，具体参考我fork的自己的仓库，由于找不到相应的opencv库，我们通过手动安装相应的库  
 https://github.com/duhuazhen/object_detector_app
 ``` python
 conda env create -f environment.yml
