@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      tensorflow图像叙事功能im2txt
-date:       2016-04-01 12:00:00
+date:       2017-04-01 12:00:00
 author:     "DuHuazhen"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
@@ -9,11 +9,21 @@ tags:
     - 深度学习
     - TensorFlow
 ---
-[tensorflow图像叙事功能][https://github.com/tensorflow/models/tree/master/research/im2txt#training-a-model](https://blog.csdn.net/sparkexpert/article/details/70846094)  
+[tensorflow图像叙事功能][https://github.com/tensorflow/models/tree/master/research/im2txt#training-a-model](https://github.com/tensorflow/models/tree/master/research/im2txt)  
+本文是基于ubuntu14.04+tensorflow1.6(cpu)+python3.6+anaconda
 
+#### 下载模型
+tensorflow/models 下面有很多模型，可以选择下载整个 models
+``` python
+git clone https://github.com/tensorflow/models.git
+``` 
+但是考虑到速度的原因，在终端里下载的速度尤其的慢，我们选择下载子文件夹
 
+、、、 python
+参照知乎上的方法：  
+将https://github.com/tensorflow/models/tree/master/research/im2txt拷到http://kinolien.github.io/gitzip/中去，直接点击download即可下载。
 
-
+、、、
 
 
 
