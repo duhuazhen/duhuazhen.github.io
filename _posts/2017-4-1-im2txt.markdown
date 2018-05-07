@@ -38,13 +38,13 @@ git clone https://github.com/tensorflow/models.git
 ```pyhon
          conda install bazel
  ```
-     * TensorFlow 1.0或更高版本[官网方法](https://www.tensorflow.org/install/)  
+     -  TensorFlow 1.0或更高版本[官网方法](https://www.tensorflow.org/install/)  
 
 本文安装的是tensorflow1.6版本  
 ```pyhon
         pip install --ignore-installed --upgrade \https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.6.0-cp34-cp34m-linux_x86_64.whl
 ```
-     * NumPy[官网方法](https://www.scipy.org/install.html)  
+     -  NumPy[官网方法](https://www.scipy.org/install.html)  
         由于anaconda自带numpy，这里就不需要安装了
      * Natural Language Toolkit (NLTK)  
         * 首先安装 NLTK[官网方法](http://www.nltk.org/install.html)   
@@ -52,8 +52,10 @@ git clone https://github.com/tensorflow/models.git
     conda install nltk
 ```
         * 然后下载 NLTK 数据[官网方法](http://www.nltk.org/data.html)：速度较慢，我下载了3个多小时。
+## 下载模型和词汇
+如果要自己训练模型，按照官网的说法，需要先下载几个小时的数据集，然后再训练1~2周，最后还要精调几个星期
 
-
+训练要花不少时间，所以用训练好的模型，下载地址是 
 
 
 
