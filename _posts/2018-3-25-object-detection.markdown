@@ -57,7 +57,7 @@ conda env create -f environment.yml
 * Jupyter notebook
 * Matplotlib
 * Tensorflow
-
+具体可以查看environment.yaml文件
 可是会出现如下错误
 ``` python
 (py35) hehe@hehe-OptiPlex-5040:~/anaconda3/envs/object_detector_app-master$ conda env create -f environment.yml
