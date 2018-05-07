@@ -27,8 +27,8 @@ git clone https://github.com/tensorflow/models.git
 
 #### 安装必要的包
 首先按照 Github 上 [im2txt](https://github.com/tensorflow/models/tree/master/research/im2txt) 的说明，安装所有必需的包  
-
-    * Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
+ ***
+    *** Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
         由于我们是在anaconda环境下运行程序，用下面的命令更简单点：
     ```pyhon
     首先激活我们的环境(我这里的环境是tensorflow)：
