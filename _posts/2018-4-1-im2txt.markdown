@@ -1,0 +1,30 @@
+---
+layout:     post
+title:      tensorflow图像叙事功能im2txt
+date:       2016-04-01 12:00:00
+author:     "DuHuazhen"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+tags:
+    - 深度学习
+    - TensorFlow
+---
+[tensorflow图像叙事功能][https://github.com/tensorflow/models/tree/master/research/im2txt#training-a-model](https://blog.csdn.net/sparkexpert/article/details/70846094)  
+
+
+
+
+
+
+
+
+
+
+
+
+
+参考：  
+  [https://blog.csdn.net/White_Idiot/article/details/78699351](https://blog.csdn.net/White_Idiot/article/details/78699351)   
+  [https://blog.csdn.net/johnnie_turbo/article/details/77931506#inception-v3%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD](https://blog.csdn.net/johnnie_turbo/article/details/77931506#inception-v3%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD)   
+  [https://blog.csdn.net/sparkexpert/article/details/70846094](https://blog.csdn.net/sparkexpert/article/details/70846094)  
+  [https://blog.csdn.net/gbbb1234/article/details/70543584](https://blog.csdn.net/gbbb1234/article/details/70543584)
