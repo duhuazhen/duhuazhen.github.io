@@ -2,7 +2,7 @@
 layout:     post
 title:      TensorFlow目标检测API和OpenCV实现实时目标检测和视频处理(2)
 subtitle:   用TensorFlow训练一个物体检测器
-date:       2016-02-29 12:00:00
+date:       2016-03-01 12:00:00
 author:     "DuHuazhen"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
