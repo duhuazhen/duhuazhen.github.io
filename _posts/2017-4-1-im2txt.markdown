@@ -12,7 +12,7 @@ tags:
 [tensorflow图像叙事功能][https://github.com/tensorflow/models/tree/master/research/im2txt#training-a-model](https://github.com/tensorflow/models/tree/master/research/im2txt)  
 本文是基于ubuntu14.04+tensorflow1.6(cpu)+python3.6+anaconda
 
-#### 下载模型
+## 下载模型
 tensorflow/models 下面有很多模型，可以选择下载整个 models
 ``` python
 git clone https://github.com/tensorflow/models.git
@@ -22,9 +22,10 @@ git clone https://github.com/tensorflow/models.git
 将https://github.com/tensorflow/models/tree/master/research/im2txt拷到http://kinolien.github.io/gitzip/中去，直接点击download即可下载。
 
 
-下载好了之后将 models/research/im2txt/im2txt 文件夹复制到你的工作区。
+下载好了之后将 models/research/im2txt/im2txt 文件夹复制到你的工作区。 
 
-#### 安装必要的包
+## 安装必要的包  
+
 首先按照 Github 上 [im2txt](https://github.com/tensorflow/models/tree/master/research/im2txt) 的说明，安装所有必需的包  
      * Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
         由于我们是在anaconda环境下运行程序，用下面的命令更简单点：  
