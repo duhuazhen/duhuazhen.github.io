@@ -47,6 +47,9 @@ git clone https://github.com/tensorflow/models.git
         由于anaconda自带numpy，这里就不需要安装了
      * Natural Language Toolkit (NLTK)  
         * 首先安装 NLTK[官网方法](http://www.nltk.org/install.html)   
+```pyhon
+    conda install nltk
+```
         * 然后下载 NLTK 数据[官网方法](http://www.nltk.org/data.html)：速度较慢，我下载了3个多小时。
 
 
