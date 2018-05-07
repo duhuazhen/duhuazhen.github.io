@@ -27,8 +27,7 @@ git clone https://github.com/tensorflow/models.git
 
 #### 安装必要的包
 首先按照 Github 上 [im2txt](https://github.com/tensorflow/models/tree/master/research/im2txt) 的说明，安装所有必需的包  
- ***
-    *** Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
+    * Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
         由于我们是在anaconda环境下运行程序，用下面的命令更简单点：
     ```pyhon
     首先激活我们的环境(我这里的环境是tensorflow)：
@@ -36,14 +35,24 @@ git clone https://github.com/tensorflow/models.git
     然后执行下面的命令来安装bazel
     conda install bazel
     ```
-
+    * 普通文本
+    * 单行文本
+    * 多行文本
+    * 文字高亮
+    * 换行
+    * 斜体
+    * 粗体
+    * 删除线
 
 
 
 
 
 参考：  
-  [https://blog.csdn.net/White_Idiot/article/details/78699351](https://blog.csdn.net/White_Idiot/article/details/78699351)   
+  [https://blog.csdn.net/White_Idiot/article/details/78699351](https://blog.csdn.net/White_Idiot/article/details/78699351) 
+  
   [https://blog.csdn.net/johnnie_turbo/article/details/77931506#inception-v3%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD](https://blog.csdn.net/johnnie_turbo/article/details/77931506#inception-v3%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD)   
-  [https://blog.csdn.net/sparkexpert/article/details/70846094](https://blog.csdn.net/sparkexpert/article/details/70846094)  
+  
+  [https://blog.csdn.net/sparkexpert/article/details/70846094](https://blog.csdn.net/sparkexpert/article/details/70846094) 
+  
   [https://blog.csdn.net/gbbb1234/article/details/70543584](https://blog.csdn.net/gbbb1234/article/details/70543584)
