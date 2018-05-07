@@ -49,7 +49,16 @@ git clone https://github.com/datitran/object_detector_app
 ``` python
 conda env create -f environment.yml
 ```
-来创造我们需要的环境，会帮我们安装好相应的tensorflow库以及其他python库，可是会出现如下错误
+来创造我们需要的环境，会帮我们安装好相应的tensorflow库以及其他python依赖库，如下面的库
+* Protobuf 2.6
+* Pillow 1.0
+* lxml
+* tf Slim (which is included in the "tensorflow/models" checkout)
+* Jupyter notebook
+* Matplotlib
+* Tensorflow
+
+可是会出现如下错误
 ``` python
 (py35) hehe@hehe-OptiPlex-5040:~/anaconda3/envs/object_detector_app-master$ conda env create -f environment.yml
 Solving environment: failed
