@@ -41,7 +41,11 @@ conda create -n py35 python=3.5 anaconda
 source activate py35
 ```
 ##### 3 安装目标检测库
-通过下面链接中的[https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection](https://github.com/tensorflow/models/tree/477ed41e7e4e8a8443bc633846eb01e2182dc68a/object_detection)命令
+在github上下载目标检测库[https://github.com/datitran/object_detector_app]并放到自己的工作路径下即可，或通过命令下载：
+``` python
+git clone https://github.com/datitran/object_detector_app
+``` 
+通过下面链接中的[https://github.com/datitran/object_detector_app](https://github.com/datitran/object_detector_app)命令
 ``` python
 conda env create -f environment.yml
 ```
