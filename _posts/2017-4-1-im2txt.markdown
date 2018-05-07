@@ -18,14 +18,17 @@ tensorflow/models 下面有很多模型，可以选择下载整个 models
 git clone https://github.com/tensorflow/models.git
 ``` 
 但是考虑到速度的原因，在终端里下载的速度尤其的慢，我们选择下载子文件夹
-
-、、、 python
+```python
 参照知乎上的方法：  
 将https://github.com/tensorflow/models/tree/master/research/im2txt拷到http://kinolien.github.io/gitzip/中去，直接点击download即可下载。
+```
 
-、、、
+下载好了之后将 models/research/im2txt/im2txt 文件夹复制到你的工作区。
 
+#### 安装必要的包
+首先按照 Github 上 [im2txt](https://github.com/tensorflow/models/tree/master/research/im2txt) 的说明，安装所有必需的包  
 
+    * Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
 
 
 
