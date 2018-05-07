@@ -30,17 +30,17 @@ git clone https://github.com/tensorflow/models.git
 * Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
         由于我们是在anaconda环境下运行程序，用下面的命令更简单点：  
 
-首先激活我们的环境(我这里的环境是tensorflow)：
+    首先激活我们的环境(我这里的环境是tensorflow)：
 ```pyhon
         source activate tensorflow
  ```
-然后执行下面的命令来安装bazel  
+    然后执行下面的命令来安装bazel  
 ```pyhon
          conda install bazel
  ```
 -  TensorFlow 1.0或更高版本[官网方法](https://www.tensorflow.org/install/)  
 
-本文安装的是tensorflow1.6版本  
+    本文安装的是tensorflow1.6版本  
 ```pyhon
         pip install --ignore-installed --upgrade \https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.6.0-cp34-cp34m-linux_x86_64.whl
 ```
