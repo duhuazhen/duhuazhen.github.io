@@ -35,7 +35,9 @@ git clone https://github.com/tensorflow/models.git
     然后执行下面的命令来安装bazel
     conda install bazel
  ```
+     * TensorFlow 1.0或更高版本[官网方法](https://www.tensorflow.org/install/)
      * NumPy
+     * 
 
 
 
