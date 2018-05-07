@@ -27,7 +27,7 @@ git clone https://github.com/tensorflow/models.git
 ## 安装必要的包  
 
 首先按照 Github 上 [im2txt](https://github.com/tensorflow/models/tree/master/research/im2txt) 的说明，安装所有必需的包  
-     * Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
+* Bazel[官网方法]（https://docs.bazel.build/versions/master/install.html）
         由于我们是在anaconda环境下运行程序，用下面的命令更简单点：  
 
 首先激活我们的环境(我这里的环境是tensorflow)：
@@ -38,20 +38,20 @@ git clone https://github.com/tensorflow/models.git
 ```pyhon
          conda install bazel
  ```
-     -  TensorFlow 1.0或更高版本[官网方法](https://www.tensorflow.org/install/)  
+-  TensorFlow 1.0或更高版本[官网方法](https://www.tensorflow.org/install/)  
 
 本文安装的是tensorflow1.6版本  
 ```pyhon
         pip install --ignore-installed --upgrade \https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.6.0-cp34-cp34m-linux_x86_64.whl
 ```
-     -  NumPy[官网方法](https://www.scipy.org/install.html)  
+-  NumPy[官网方法](https://www.scipy.org/install.html)  
         由于anaconda自带numpy，这里就不需要安装了
      * Natural Language Toolkit (NLTK)  
         * 首先安装 NLTK[官网方法](http://www.nltk.org/install.html)   
 ```pyhon
     conda install nltk
 ```
-        * 然后下载 NLTK 数据[官网方法](http://www.nltk.org/data.html)：速度较慢，我下载了3个多小时。
+* 然后下载 NLTK 数据[官网方法](http://www.nltk.org/data.html)：速度较慢，我下载了3个多小时。
 ## 下载模型和词汇
 如果要自己训练模型，按照官网的说法，需要先下载几个小时的数据集，然后再训练1~2周，最后还要精调几个星期
 
