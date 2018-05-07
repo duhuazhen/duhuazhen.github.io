@@ -11,7 +11,7 @@ tags:
 ---
 [tensorflow图像叙事功能][https://github.com/tensorflow/models/tree/master/research/im2txt#training-a-model](https://github.com/tensorflow/models/tree/master/research/im2txt)  
 本文是基于ubuntu14.04+tensorflow1.6(cpu)+python3.6+anaconda
-
+我的仓库：[https://github.com/duhuazhen/Tensorflow_practice/tree/master/im2txt1](https://github.com/duhuazhen/Tensorflow_practice/tree/master/im2txt)
 ## 下载模型
 tensorflow/models 下面有很多模型，可以选择下载整个 models
 ``` python
