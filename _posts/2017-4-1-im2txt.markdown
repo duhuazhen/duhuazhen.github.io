@@ -140,10 +140,34 @@ sudo chmod 777 run.sh
 ``` python
 ./im2txt/run.sh
 ``` 
+## 实验结果
 
+谷歌经典的实验用图  
+![3.jpg](https://upload-images.jianshu.io/upload_images/11573595-d846fe6afcb3d0c7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+``` python
+Captions for image 3.jpg:
+  0) a small dog is eating a slice of pizza . (p=0.000129)
+  1) a dog is sitting at a table with a pizza . (p=0.000054)
+  2) a dog is sitting at a table with a plate of food . (p=0.000047)
 
-参考：  
-  [https://blog.csdn.net/White_Idiot/article/details/78699351](https://blog.csdn.net/White_Idiot/article/details/78699351) 
+``` 
+为了测试有效性，我们从百度上随机找了一种图片   
+![6.jpg](https://upload-images.jianshu.io/upload_images/11573595-dd5cba394513f043.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
+结果如下  
+``` python
+
+Captions for image 6.jpg:
+  0) a dog laying on the grass with a frisbee in its mouth . (p=0.001007)
+  1) a brown and white dog laying on top of a grass covered field . (p=0.000901)
+  2) a brown and white dog laying on top of a green field . (p=0.000826)
+
+```
+总体来说效果还是可以的 
+
+可惜由于实验硬件太差，要不可以结合inception v4来训练，应该效果会更好。另外，还有中文标签的生成。
+其余错误可看参考中的第一个链接  
+参考： 
+  [https://blog.csdn.net/White_Idiot/article/details/78699351](https://blog.csdn.net/White_Idiot/article/details/78699351) 
   
   [https://blog.csdn.net/johnnie_turbo/article/details/77931506#inception-v3%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD](https://blog.csdn.net/johnnie_turbo/article/details/77931506#inception-v3%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD)   
   
