@@ -83,7 +83,7 @@ conda env create -f environment.yml
  pip install --ignore-installed --upgrade \https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.6.0-cp34-cp34m-linux_x86_64.whl
  ``` 
 ##### 4  运行目标检测库
-``` python
+```python
 python object_detection_app.py Optional arguments (default value):
 
     Device index of the camera --source=0
@@ -91,7 +91,6 @@ python object_detection_app.py Optional arguments (default value):
     Height of the frames in the video stream --height=360
     Number of workers --num-workers=2
     Size of the queue --queue-size=5
-
 ```
 来启动物体识别程序。整体来说效果还是可以的  
 ![image.png](https://upload-images.jianshu.io/upload_images/11573595-432d0147c1bbedea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
