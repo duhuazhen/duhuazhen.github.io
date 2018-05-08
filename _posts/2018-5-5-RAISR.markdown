@@ -8,7 +8,7 @@ catalog: true
 tags:
     - 深度学习
 ---
-本文是基于ubuntu14.04+tensorflow1.2(cpu)+python3.5+anaconda+opencv3.1  
+本文是基于ubuntu14.04+python3.5+anaconda+opencv3.1  
 
 ## 简介
 Google刚刚发布了一种名为RAISR（Rapid and Accurate Super Image Resolution，意为“快速、精确的超级图像分辨率技术”）的图像压缩技术，旨在保存宝贵的数据，而不牺牲照片质量；并在带宽受限的移动设备上提供清晰锐利的图像。
