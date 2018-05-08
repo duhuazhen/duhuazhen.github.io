@@ -43,7 +43,7 @@ git clone https://github.com/mdietrichstein/tensorflow-open_nsfw
 ``` python
 python classify_nsfw.py -m data/open_nsfw-weights.npy test.jpg  
 ``` 
-
+下面我们通过几组照片来测试，结果中的SFW表示适合在公共场合查看的概率，NSFW表示不适合在公共场合查看的概率：
 ![test4.jpg](https://upload-images.jianshu.io/upload_images/11573595-e217680eb5840168.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ``` python
  Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
@@ -59,7 +59,7 @@ Results for 'test1.jpg'
 	NSFW score:	0.44570574164390564
 ``` 
 
-![test2.jpg](https://upload-images.jianshu.io/upload_images/11573595-c2a212986eefab3e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![test2.jpg](https://upload-images.jianshu.io/upload_images/11573595-7c05e7bd37c8e366.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ``` python
 Results for 'test2.jpg'
 	SFW score:	0.9743315577507019
