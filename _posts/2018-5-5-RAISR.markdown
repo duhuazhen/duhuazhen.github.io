@@ -51,7 +51,7 @@ for xP in range(5,LR.shape[0]-6):
 ``` python
 git clone https://github.com/ndscigdata/RAISR/tree/master
 ```
-依次运行一下命令
+依次运行以下命令
 ``` python
 python hashTable.py
 ```
