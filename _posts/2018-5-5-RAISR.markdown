@@ -1,0 +1,15 @@
+---
+layout:     post
+title:     谷歌图像压缩技术RAISR
+date:       2018-05-05 12:00:00
+author:     "DuHuazhen"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+tags:
+    - 深度学习
+---
+本文是基于ubuntu14.04+tensorflow1.2(cpu)+python3.5+anaconda+opencv3.1  
+
+## 简介
+Google刚刚发布了一种名为RAISR（Rapid and Accurate Super Image Resolution，意为“快速、精确的超级图像分辨率技术”）的图像压缩技术，旨在保存宝贵的数据，而不牺牲照片质量；并在带宽受限的移动设备上提供清晰锐利的图像。
+Google声称，该技术可以降低高达75％的带宽，RAISR分析同一图像的低分辨率和高分辨率版本，了解到高分辨率版本出众的原因，然后在低分辨率版本模拟出来。实际上就是使用机器学习创建一个类似Instagram的过滤器，欺骗你的眼睛，让你相信低分辨率与高分辨率图像是一致的。
