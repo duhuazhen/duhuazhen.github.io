@@ -45,4 +45,32 @@ for xP in range(5,LR.shape[0]-6):
         hh = np.matrix(h[j,t])
         LRDirect[xP][yP] = hh*A.T
 ```
-　　从上面可以看出，RAISR 的过滤器都是根据图像的边缘特征训练的：亮度和色彩梯度、平实和纹理区域等。这又受到方向（direction，边缘角度）、强度（strength，更锐利的边缘强度更高）和黏性（coherence，一项量化边缘方向性的指标）的影响。
+　　从上面可以看出，RAISR 的过滤器都是根据图像的边缘特征训练的：亮度和色彩梯度、平实和纹理区域等。这又受到方向（direction，边缘角度）、强度（strength，更锐利的边缘强度更高）和黏性（coherence，一项量化边缘方向性的指标）的影响。   
+## 下载源码
+[https://github.com/duhuazhen/RAISR](https://github.com/duhuazhen/RAISR)有一些地方的脚本语言应该是在2.7环境下编译的，因此需要对上述代码中进行相应的修订，[https://github.com/ndscigdata/RAISR/tree/master](https://github.com/ndscigdata/RAISR/tree/master)对源码进行了相应的修订
+``` python
+git clone https://github.com/ndscigdata/RAISR/tree/master
+```
+依次运行一下命令
+``` python
+python hashTable.py
+```
+``` python
+ python train.py 
+
+```
+``` python
+ python test.py 
+
+```
+测试结果如下
+![fig2.png](https://upload-images.jianshu.io/upload_images/11573595-57261c6c7a756121.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
+
+
+  
+  
+####  参考
+[https://github.com/duhuazhen/RAISR](https://github.com/duhuazhen/RAISR)
+
+[https://github.com/ndscigdata/RAISR/tree/master](https://github.com/ndscigdata/RAISR/tree/master)
+
