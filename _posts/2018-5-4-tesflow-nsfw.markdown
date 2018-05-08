@@ -36,10 +36,10 @@ conda install scikit-image
 ## 下载源码
 ``` python
 git clone https://github.com/mdietrichstein/tensorflow-open_nsfw
-
 ``` 
 
 ## 用法  
+
 ``` python
 python classify_nsfw.py -m data/open_nsfw-weights.npy test.jpg  
 ``` 
