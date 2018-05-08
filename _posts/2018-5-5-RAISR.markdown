@@ -13,3 +13,36 @@ tags:
 ## 简介
 Google刚刚发布了一种名为RAISR（Rapid and Accurate Super Image Resolution，意为“快速、精确的超级图像分辨率技术”）的图像压缩技术，旨在保存宝贵的数据，而不牺牲照片质量；并在带宽受限的移动设备上提供清晰锐利的图像。
 Google声称，该技术可以降低高达75％的带宽，RAISR分析同一图像的低分辨率和高分辨率版本，了解到高分辨率版本出众的原因，然后在低分辨率版本模拟出来。实际上就是使用机器学习创建一个类似Instagram的过滤器，欺骗你的眼睛，让你相信低分辨率与高分辨率图像是一致的。
+仔细看了下算法的原理，才发现这个算法的压缩机制主要包括两个部分：
+
+（1）先创建一个低分辨率的图片，保存在hashtable中。
+
+（2）在高低分辨率的成对图片中学习，即先对低分辨率图片应用低功耗的的升采样，然后在升采样图片和高分辨率图片的组合中学习过滤器。
+
+如下这段核心代码可以看到：
+``` python
+mat = cv2.imread("./train/alp2.jpg")
+h = np.load("lowR2.npy")
+
+mat = cv2.cvtColor(mat, cv2.COLOR_BGR2YCrCb)[:,:,2]
+
+
+# 升采样
+LR = cv2.resize(mat,(0,0),fx=2,fy=2)
+
+LRDirect = np.zeros((LR.shape[0],LR.shape[1]))
+for xP in range(5,LR.shape[0]-6):
+    for yP in range(5,LR.shape[1]-6):
+        patch = LR[xP-5:xP+6,yP-5:yP+6]
+
+       #　之前保存的方向强度等属性信息
+        [angle,strenth,coherence] = hashTable(patch,Qangle,Qstrenth,Qcoherence)
+        j = angle*9+strenth*3+coherence
+        A = patch.reshape(1,-1)
+        t = xP%2*2+yP%2
+
+＃ 过滤器
+        hh = np.matrix(h[j,t])
+        LRDirect[xP][yP] = hh*A.T
+```
+　　从上面可以看出，RAISR 的过滤器都是根据图像的边缘特征训练的：亮度和色彩梯度、平实和纹理区域等。这又受到方向（direction，边缘角度）、强度（strength，更锐利的边缘强度更高）和黏性（coherence，一项量化边缘方向性的指标）的影响。
