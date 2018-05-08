@@ -58,7 +58,6 @@ Results for 'test1.jpg'
 	SFW score:	0.554294228553772
 	NSFW score:	0.44570574164390564
 ``` 
-
 ![test2.jpg](https://upload-images.jianshu.io/upload_images/11573595-7c05e7bd37c8e366.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ``` python
 Results for 'test2.jpg'
