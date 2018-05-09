@@ -41,7 +41,7 @@ t10k-labels-idx1-ubyte     测试数据label</p><br>
 每张图像是28 * 28像素：<br>
 
 我们的任务是使用上面数据训练一个可以准确识别手写数字的神经网络模型。
- ![](https://github.com/duhuazhen/Tensorflow_practice/blob/master/Based%20on%20article/3%20RNN/picture/2.png)<br>
+ ![test](https://github.com/duhuazhen/Tensorflow_practice/blob/master/Based%20on%20article/3%20RNN/picture/2.png)<br>
 ```python
 import numpy as np
 import random
