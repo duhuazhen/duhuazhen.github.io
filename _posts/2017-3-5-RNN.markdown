@@ -30,7 +30,7 @@ NN的目的使用来处理序列数据。在传统的神经网络模型中，是
 当我们学习新的编程语言时，通常第一个程序就是打印输出著名的“Hello World!”。在深度学习中，MNIST数据集就相当于Hello World。
 
 MNIST是一个简单的计算机视觉数据集，它包含手写数字的图像集：<br>
- ![](https://github.com/duhuazhen/Tensorflow_practice/blob/master/Based%20on%20article/3%20RNN/picture/1.png)<br>
+![1.png](https://upload-images.jianshu.io/upload_images/11573595-86f02397e05795c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
  
   MNIST数据集下载地址: [Yann LeCun]http://yann.lecun.com/exdb/mnist/<br>
  <p> 数据集：<br>
@@ -41,7 +41,7 @@ t10k-labels-idx1-ubyte     测试数据label</p><br>
 每张图像是28 * 28像素：<br>
 
 我们的任务是使用上面数据训练一个可以准确识别手写数字的神经网络模型。
- ![test](https://github.com/duhuazhen/Tensorflow_practice/blob/master/Based%20on%20article/3%20RNN/picture/2.png)<br>
+![2.png](https://upload-images.jianshu.io/upload_images/11573595-9987abe227514302.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ```python
 import numpy as np
 import random
@@ -55,7 +55,7 @@ class NeuralNet(object):
         self.w_ = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]  # w_、b_初始化为正态分布随机数
         self.b_ = [np.random.randn(y, 1) for y in sizes[1:]] 
 ```
- ![](https://github.com/duhuazhen/Tensorflow_practice/blob/master/Based%20on%20article/3%20RNN/picture/3.png)<br>
+![3.png](https://upload-images.jianshu.io/upload_images/11573595-7ec5ace66cc470b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
  上图网络的构造方法：  
  ```python
  net = NeuralNet([3, 4, 2])
@@ -98,7 +98,7 @@ y = sigmoid(x)
 pyplot.plot(x,y)
 pyplot.show()
  ```
-  ![](https://github.com/duhuazhen/Tensorflow_practice/blob/master/Based%20on%20article/3%20RNN/picture/4.png)<br>
+![4.png](https://upload-images.jianshu.io/upload_images/11573595-e1c6f059c2722adb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
   上面使用Sigmoid函数做为神经网络中的激活函数，其作用就是引入非线性。它的优点在于输出范围有限(0, 1)，所以数据在传递的过程中不容易发散。可选择的激活函数有很多。  
   定义feedforward函数：  
 ```python
