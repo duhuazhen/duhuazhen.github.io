@@ -1,0 +1,12 @@
+---
+layout:     post
+title:     基于tensorflow的人脸识别
+date:       2018-03-05 12:00:00
+author:     "DuHuazhen"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+tags:
+    - tensorflow
+    - 深度学习
+---
+
