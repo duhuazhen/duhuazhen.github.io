@@ -1,0 +1,20 @@
+---
+layout:     post
+title:     (转)训练一个简单的游戏AI（Deep Q Network）
+date:       2017-01-03 12:00:00
+author:     "DuHuazhen"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+tags:
+    - tensorflow
+    - 深度学习
+---
+
+Deep Q Network是DeepMind最早(2013年)提出来的，是深度强化学习方法。
+
+最开始AI什么也不会，通过给它提供游戏界面像素和分数，慢慢把它训练成游戏高手。
+
+Github上有不少DQN实现，在本帖中，我使用TensorFlow训练一个简单的游戏AI。
+
+    使用pygame写一个简单的小游戏
+    使用强化学习训练游戏AI
