@@ -326,7 +326,9 @@ train_neural_network(input_image)
 OpenAI文档：[https://gym.openai.com/docs](https://gym.openai.com/docs)  
 OpenAI源代码：[https://github.com/openai/gym](https://github.com/openai/gym) 
 
-![强化学习模型](https://upload-images.jianshu.io/upload_images/11573595-7c05e7bd37c8e366.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![强化学习模型](https://upload-images.jianshu.io/upload_images/11573595-c26d1bfaad9c3c04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+强化学习模型
+
 安装Gym
 ```python
 $ git clone https://github.com/openai/gym
