@@ -16,11 +16,11 @@ tags:
 [https://blog.csdn.net/zouxy09/article/details/8781543](https://blog.csdn.net/zouxy09/article/details/8781543)
 [http://deeplearning.net/tutorial/lenet.html](http://deeplearning.net/tutorial/lenet.html)
 
-使用TensorFlow创建CNN(MNIST)
 改变某个同学人生的网站(cnn)：[http://scs.ryerson.ca/~aharley/vis/conv/](http://scs.ryerson.ca/~aharley/vis/conv/),这是一个卷积神经网络的一个可视化的3D演示。  
 基于TensorFlow的神经网络演示:[https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=35&networkShape=4,2,2&seed=0.89675&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=classification&initZero=false&hideText=false](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=35&networkShape=4,2,2&seed=0.89675&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=classification&initZero=false&hideText=false) <br>github地址：https://github.com/tensorflow/playground
 
 
+使用TensorFlow创建CNN(MNIST)  
 ``` python
 #coding=utf-8
 import tensorflow as tf
