@@ -17,7 +17,7 @@ tags:
 [http://deeplearning.net/tutorial/lenet.html](http://deeplearning.net/tutorial/lenet.html)
 
 使用TensorFlow创建CNN(MNIST)
-改变某个同学人生的网站(cnn)：[http://scs.ryerson.ca/~aharley/vis/conv/](http://scs.ryerson.ca/~aharley/vis/conv/)
+改变某个同学人生的网站(cnn)：[http://scs.ryerson.ca/~aharley/vis/conv/](http://scs.ryerson.ca/~aharley/vis/conv/),这是一个卷积神经网络的一个可视化的3D演示。  
 基于TensorFlow的神经网络演示:[https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=35&networkShape=4,2,2&seed=0.89675&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=classification&initZero=false&hideText=false](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=35&networkShape=4,2,2&seed=0.89675&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=classification&initZero=false&hideText=false) <br>github地址：https://github.com/tensorflow/playground
 
 
@@ -105,4 +105,28 @@ for i in range(1000):
             acc_forone=compute_accuracy(test_batch[0], test_batch[1])
             accuracy=acc_forone+accuracy  
         print("测试结果:batch:%d,准确率:%f" %(i,accuracy/10))
+```
+结果如下  
+``` python
+测试结果:batch:0,准确率:0.071800
+测试结果:batch:50,准确率:0.767800
+测试结果:batch:100,准确率:0.879200
+测试结果:batch:150,准确率:0.902800
+测试结果:batch:200,准确率:0.918200
+测试结果:batch:250,准确率:0.933100
+测试结果:batch:300,准确率:0.939100
+测试结果:batch:350,准确率:0.944900
+测试结果:batch:400,准确率:0.951700
+测试结果:batch:450,准确率:0.953500
+测试结果:batch:500,准确率:0.957200
+测试结果:batch:550,准确率:0.959700
+测试结果:batch:600,准确率:0.961400
+测试结果:batch:650,准确率:0.963100
+测试结果:batch:700,准确率:0.963400
+测试结果:batch:750,准确率:0.966100
+测试结果:batch:800,准确率:0.966300
+测试结果:batch:850,准确率:0.967700
+测试结果:batch:900,准确率:0.968500
+测试结果:batch:950,准确率:0.969800
+
 ```
