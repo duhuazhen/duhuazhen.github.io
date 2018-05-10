@@ -20,6 +20,11 @@ Github上有不少DQN实现，在本帖中，我使用TensorFlow训练一个简�
 2.使用强化学习训练游戏AI
 
 ### pygame小游戏
+我的环境：ubuntu14.04+python3.5+anaconda+pygame
+pygame安装  
+在当前环境下运行
+```python
+pip install pygame
 ``` python
 import pygame
 from pygame.locals import *
@@ -106,10 +111,20 @@ class Game(object):
 game = Game()
 game.run()
 ```
+将上述代码保存为pygame.py，运行  
+```python
+python pygame.py
+
+```
+会产生__pycache__文件夹，进入并运行  
+```python
+ python pygame.cpython-35.pyc 
+```
 自制的垃圾游戏。
 操作：按住鼠标左键左移棒子，按住鼠标右键右移棒子。每次接住小方块得一分。
 
 ### 基于强化学习的AI（TensorFlow）
+我的环境：ubuntu14.04+python3.5+anaconda+pygame+opencv3.1
 ``` python
 import pygame
 import random
@@ -312,6 +327,12 @@ def train_neural_network(input_image):
  
 train_neural_network(input_image)
 ```
+将上述代码保存为AIgame.py，运行  
+```python
+python AIgame.py
+
+```
+会保存相应的模型。  
 如果你使用Linux，你可以使用htop监控内存使用情况。
 
 刚开始，AI傻傻的，只会控制棒子来回瞎晃，通过try-error，它会慢慢掌握这个游戏。等我一觉醒来，这货已经玩的不亦乐乎了。
