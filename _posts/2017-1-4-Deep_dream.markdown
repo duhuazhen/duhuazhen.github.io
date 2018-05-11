@@ -121,3 +121,14 @@ layer = 'mixed4c'
 deep_dream(tf.square(graph.get_tensor_by_name("import/%s:0"%layer)), input_img)
 
 ```
+将测试图片保存在工作目录并命名为input_jpg。  
+输入图像  
+
+![input.jpg](https://upload-images.jianshu.io/upload_images/11573595-e0e4f474e73cc68a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+输出图像  
+
+
+![output4.jpg](https://upload-images.jianshu.io/upload_images/11573595-da6155c2f57c4190.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+原文链接：[http://blog.topspeedsnail.com/archives/10667](http://blog.topspeedsnail.com/archives/10667)
