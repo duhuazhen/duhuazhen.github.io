@@ -14,8 +14,8 @@ tags:
 我在GitHub看到了一个使用RNN生成经典音乐的项目：[biaxial-rnn-music-composition](https://github.com/hexahedria/biaxial-rnn-music-composition)，它是基于Theano的。本帖改为使用TensorFlow生成音乐，代码逻辑在很大程度上基于前者。  
 
 
-    https://deeplearning4j.org/restrictedboltzmannmachine.html  
-    https://magenta.tensorflow.org/2016/06/10/recurrent-neural-network-generation-tutorial/  
+    [https://deeplearning4j.org/restrictedboltzmannmachine.html](https://deeplearning4j.org/restrictedboltzmannmachine.html)     
+    [https://magenta.tensorflow.org/2016/06/10/recurrent-neural-network-generation-tutorial/](https://magenta.tensorflow.org/2016/06/10/recurrent-neural-network-generation-tutorial/)  
     https://deepmind.com/blog/wavenet-generative-model-raw-audio  
     Google的项目Magenta：生成音乐、绘画或视频  
     http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/  
