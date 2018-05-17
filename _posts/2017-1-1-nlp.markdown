@@ -1,0 +1,17 @@
+---
+layout:     post
+title:      自然语言处理基础知识
+date:       2017-01-01 12:00:00
+author:     "DuHuazhen"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+tags:
+    - 深度学习
+---
+
+博客：  
+[https://www.jianshu.com/u/5f50d2b82e05](https://www.jianshu.com/u/5f50d2b82e05)   
+[http://licstar.net/archives/328#s0](http://licstar.net/archives/328#s0)  
+[mxnet](https://github.com/apache/incubator-mxnet)  
+[mxnet models](http://data.dmlc.ml/mxnet/models/)  
+[tensorflow word2vec](https://github.com/litoeknee/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec)  
