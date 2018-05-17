@@ -15,3 +15,4 @@ tags:
 [mxnet](https://github.com/apache/incubator-mxnet)  
 [mxnet models](http://data.dmlc.ml/mxnet/models/)  
 [tensorflow word2vec](https://github.com/litoeknee/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec)  
+[https://blog.csdn.net/han_xiaoyang/article/details/51871068](https://blog.csdn.net/han_xiaoyang/article/details/51871068)  
